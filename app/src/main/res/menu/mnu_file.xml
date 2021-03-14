@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@id/favFragment"
+        android:icon="@drawable/ic_avorite"
+        android:title="Favorite" />
+    <item
+        android:id="@id/callFragment"
+        android:icon="@drawable/ic_call"
+        android:title="Calls" />
+    <item
+        android:id="@id/contactFragment"
+        android:icon="@drawable/ic_baseline_contacts_24"
+        android:title="Contacts" />
+</menu>
