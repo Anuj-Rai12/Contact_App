@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //getSupportActionBar()?.hide()
         binding=DataBindingUtil.setContentView(this,R.layout.activity_main)
         navController = findNavController(R.id.fragment)
         appBarConfiguration =

@@ -26,7 +26,11 @@
         tools:layout="@layout/fragment_contact" />
     <fragment
         android:id="@+id/dailerFragment"
-        android:name="com.example.roomdatabase.DailerFragment"
+        android:name="com.example.roomdatabase.extrafragmentfile.DailerFragment"
         android:label="fragment_dailer"
-        tools:layout="@layout/fragment_dailer" />
+        tools:layout="@layout/fragment_dailer" >
+        <action
+            android:id="@+id/action_dailerFragment_to_callFragment"
+            app:destination="@id/callFragment" />
+    </fragment>
 </navigation>

@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
+                android:layout_marginBottom="70dp"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/ic_dialpad"
                 app:backgroundTint="@color/anujgreen"
                 app:tint="@color/white" />
@@ -35,7 +36,8 @@
                 android:layout_height="64dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
+                android:layout_marginBottom="70dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/myshape"
                 android:visibility="invisible" />
         </RelativeLayout>
