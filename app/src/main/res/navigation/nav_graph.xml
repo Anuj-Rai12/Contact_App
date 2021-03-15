@@ -23,14 +23,35 @@
         android:id="@+id/contactFragment"
         android:name="com.example.roomdatabase.myfragments.ContactFragment"
         android:label="fragment_contact"
-        tools:layout="@layout/fragment_contact" />
+        tools:layout="@layout/fragment_contact" >
+        <action
+            android:id="@+id/action_contactFragment_to_createContactFragment"
+            app:destination="@id/createContactFragment"
+            app:enterAnim="@anim/ente_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/dailerFragment"
-        android:name="com.example.roomdatabase.extrafragmentfile.DailerFragment"
+        android:name="com.example.roomdatabase.extrafragmentfile.DialerFragment"
         android:label="fragment_dailer"
         tools:layout="@layout/fragment_dailer" >
         <action
             android:id="@+id/action_dailerFragment_to_callFragment"
             app:destination="@id/callFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createContactFragment"
+        android:name="com.example.roomdatabase.extrafragmentfile.CreateContactFragment"
+        android:label="fragment_create_contact"
+        tools:layout="@layout/fragment_create_contact" >
+        <action
+            android:id="@+id/action_createContactFragment_to_contactFragment"
+            app:destination="@id/contactFragment"
+            app:enterAnim="@anim/ente_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
 </navigation>

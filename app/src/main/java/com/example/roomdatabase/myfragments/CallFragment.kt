@@ -23,7 +23,7 @@ class CallFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_call, container, false)
         animation = AnimationUtils.loadAnimation(activity, R.anim.green_expolsion).apply {
@@ -33,19 +33,19 @@ class CallFragment : Fragment() {
         gotoDialer()
         return binding.root
     }
-
     private fun gotoDialer() {
         binding.apply {
             mydialer.setOnClickListener {
+                (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
                 mydialer.isVisible = false
                 greenboom.isVisible = true
                 greenboom.startAnimation(animation) {
-                    callDailer()
+                    callDialer()
                 }
             }
         }
     }
 
-    private fun callDailer() =
+    private fun callDialer() =
         view?.findNavController()?.navigate(R.id.action_callFragment_to_dailerFragment)
 }
