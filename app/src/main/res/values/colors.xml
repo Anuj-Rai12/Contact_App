@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="anujgreen">#0BAC4F</color>
+    <color name="anujlightred">#EFE7E7</color>
+    <color name="anujcherryred">#ee5c3f</color>
+    <color name="anujlightgrey">#D3D3D3</color>
 
 </resources>
