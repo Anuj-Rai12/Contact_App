@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity() {
         binding.mybtnNag.setupWithNavController(navController)
     }
 
+    private fun checkCallPermission() = (ActivityCompat.checkSelfPermission(
+        this,
+        Manifest.permission.CALL_PHONE
+    ) == PackageManager.PERMISSION_GRANTED)
+
     private fun checkCameraPermission() =
         (ActivityCompat.checkSelfPermission(
             this,
@@ -48,6 +53,8 @@ class MainActivity : AppCompatActivity() {
             collectAllPermission.add(Manifest.permission.CAMERA)
         if (!checkCameraPermission())
             collectAllPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        if(!checkCallPermission())
+            collectAllPermission.add(Manifest.permission.CALL_PHONE)
         if (collectAllPermission.isNotEmpty())
             ActivityCompat.requestPermissions(this, collectAllPermission.toTypedArray(), 101)
     }

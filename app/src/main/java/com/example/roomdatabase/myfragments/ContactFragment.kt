@@ -24,6 +24,6 @@ class ContactFragment : Fragment() {
     }
 
     private fun gotoCreateContact() =
-        view?.findNavController()?.navigate(R.id.action_contactFragment_to_createContactFragment)
+        view?.findNavController()?.navigate(R.id.action_contactFragment_to_displayContactFragment)
 
 }

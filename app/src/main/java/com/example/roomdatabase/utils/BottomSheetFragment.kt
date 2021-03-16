@@ -33,14 +33,20 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         //return super.onCreateView(inflater, container, savedInstanceState)
         binding = DataBindingUtil.inflate(inflater, R.layout.botton_layout, container, false)
         binding.btnopencam.setOnClickListener {
-//            Toast.makeText(activity, "Hello fucker", Toast.LENGTH_SHORT).show()
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, 111)
+            if (checkCameraPermission()) {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, 111)
+            } else
+                Toast.makeText(activity, "Camera Permission not given", Toast.LENGTH_SHORT).show()
 
         }
         binding.btnopengal.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent, 404)
+            if (checkGallery()) {
+                val intent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(intent, 404)
+            } else
+                Toast.makeText(activity, "Gallery Permission not given", Toast.LENGTH_SHORT).show()
         }
         return binding.root
     }
@@ -51,7 +57,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             404 -> {
                 if (resultCode == RESULT_OK) {
                     try {
-                        val inputStream =requireActivity().contentResolver.openInputStream(data?.data!!)
+                        val inputStream =
+                            requireActivity().contentResolver.openInputStream(data?.data!!)
                         val bitmapImage = BitmapFactory.decodeStream(inputStream)
                         Toast.makeText(
                             activity,
@@ -59,7 +66,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                             Toast.LENGTH_SHORT
                         )
                             .show()
-                        /*Further modified status:Failed*/
                     } catch (e: FileNotFoundException) {
                         Toast.makeText(activity, "File not found", Toast.LENGTH_SHORT).show()
                     }
@@ -86,4 +92,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                 Manifest.permission.CAMERA
             )
         } == PackageManager.PERMISSION_GRANTED)
+
+    private fun checkGallery() = (context?.let {
+        ActivityCompat.checkSelfPermission(
+            it,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+    } == PackageManager.PERMISSION_GRANTED)
 }

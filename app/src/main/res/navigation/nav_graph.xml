@@ -9,7 +9,15 @@
         android:id="@+id/favFragment"
         android:name="com.example.roomdatabase.myfragments.FavFragment"
         android:label="fragment_fav"
-        tools:layout="@layout/fragment_fav" />
+        tools:layout="@layout/fragment_fav" >
+        <action
+            android:id="@+id/action_favFragment_to_displayContactFragment"
+            app:destination="@id/displayContactFragment"
+            app:enterAnim="@anim/ente_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/callFragment"
         android:name="com.example.roomdatabase.myfragments.CallFragment"
@@ -31,6 +39,13 @@
             app:exitAnim="@anim/exit_anim"
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim" />
+        <action
+            android:id="@+id/action_contactFragment_to_displayContactFragment"
+            app:destination="@id/displayContactFragment"
+            app:enterAnim="@anim/ente_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/dailerFragment"
@@ -39,7 +54,11 @@
         tools:layout="@layout/fragment_dailer" >
         <action
             android:id="@+id/action_dailerFragment_to_callFragment"
-            app:destination="@id/callFragment" />
+            app:destination="@id/callFragment"
+            app:enterAnim="@anim/pop_enter_anim"
+            app:exitAnim="@anim/pop_exit_anim"
+            app:popEnterAnim="@anim/ente_anim"
+            app:popExitAnim="@anim/exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/createContactFragment"
@@ -54,4 +73,14 @@
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
+    <dialog
+        android:id="@+id/bottomSheetFragment"
+        android:name="com.example.roomdatabase.utils.BottomSheetFragment"
+        android:label="BottomSheetFragment"
+        tools:layout="@layout/botton_layout" />
+    <fragment
+        android:id="@+id/displayContactFragment"
+        android:name="com.example.roomdatabase.extrafragmentfile.DisplayContactFragment"
+        android:label="fragment_display_contact"
+        tools:layout="@layout/fragment_display_contact" />
 </navigation>
