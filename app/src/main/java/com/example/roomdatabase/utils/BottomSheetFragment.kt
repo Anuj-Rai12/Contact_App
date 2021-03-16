@@ -1,11 +1,14 @@
 package com.example.roomdatabase.utils
 
+import android.Manifest
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.BottonLayoutBinding
@@ -28,4 +31,5 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }
         return binding.root
     }
+
 }
