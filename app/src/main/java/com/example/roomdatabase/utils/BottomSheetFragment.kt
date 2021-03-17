@@ -1,14 +1,11 @@
 package com.example.roomdatabase.utils
 
 import android.Manifest
-import android.R.attr
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.BitmapRegionDecoder
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -17,20 +14,29 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.BottonLayoutBinding
+import com.example.roomdatabase.mycontactdb.MyContactBolier
+import com.example.roomdatabase.mycontactdb.MyContactDao
+import com.example.roomdatabase.myviewmodle.MyViewModel
+/*import com.example.roomdatabase.myviewmodle.MyViewModelFactory*/
+import com.example.roomdatabase.repos.MyContactRepo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import java.io.FileNotFoundException
-
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
     lateinit var binding: BottonLayoutBinding
+    private lateinit var bitmap: Bitmap
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //return super.onCreateView(inflater, container, savedInstanceState)
         binding = DataBindingUtil.inflate(inflater, R.layout.botton_layout, container, false)
         binding.btnopencam.setOnClickListener {
             if (checkCameraPermission()) {
@@ -57,15 +63,13 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             404 -> {
                 if (resultCode == RESULT_OK) {
                     try {
-                        val inputStream =
-                            requireActivity().contentResolver.openInputStream(data?.data!!)
-                        val bitmapImage = BitmapFactory.decodeStream(inputStream)
-                        Toast.makeText(
-                            activity,
-                            "Gallery is working file ${bitmapImage}",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        var bitmap: Deferred<Bitmap>
+                        CoroutineScope(Main).launch {
+                            bitmap = async(IO) {
+                                return@async bitGal(data)
+                            }
+                            bitmapop.value = bitmap.await()
+                        }
                     } catch (e: FileNotFoundException) {
                         Toast.makeText(activity, "File not found", Toast.LENGTH_SHORT).show()
                     }
@@ -73,16 +77,34 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             }
             111 -> {
                 if (resultCode == RESULT_OK) {
-                    val bitmap = data?.getParcelableExtra<Bitmap>("data")
-                    Toast.makeText(
-                        activity,
-                        "Gallery is working file ${bitmap}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    var bitmap: Deferred<Bitmap>
+                    CoroutineScope(Main).launch {
+                        bitmap = async(IO) {
+                            return@async bitCam(data)
+                        }
+                        bitmapop.value = bitmap.await()
+                    }
                 }
             }
 
         }
+    }
+
+    suspend fun bitGal(data: Intent?): Bitmap {
+        withContext(IO) {
+            val inputStream = requireActivity().contentResolver.openInputStream(data?.data!!)
+            bitmap = BitmapFactory.decodeStream(inputStream)
+            //bitmapop.value = bitmap
+
+        }
+        return bitmap
+    }
+
+    suspend fun bitCam(data: Intent?): Bitmap {
+        withContext(IO) {
+            bitmap = data?.getParcelableExtra<Bitmap>("data")!!
+        }
+        return bitmap
     }
 
     private fun checkCameraPermission() =
@@ -99,4 +121,8 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
     } == PackageManager.PERMISSION_GRANTED)
+
+    companion object {
+        var bitmapop = MutableLiveData<Bitmap>()
+    }
 }
