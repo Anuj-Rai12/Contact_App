@@ -1,4 +1,4 @@
 package com.example.roomdatabase.recyclecontact
 
-class MyContactRecycle {
+class MyContactRecycle(private val U) {
 }

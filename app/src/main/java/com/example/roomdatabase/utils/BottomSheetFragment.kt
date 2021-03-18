@@ -15,14 +15,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.BottonLayoutBinding
-import com.example.roomdatabase.mycontactdb.MyContactBolier
-import com.example.roomdatabase.mycontactdb.MyContactDao
-import com.example.roomdatabase.myviewmodle.MyViewModel
-/*import com.example.roomdatabase.myviewmodle.MyViewModelFactory*/
-import com.example.roomdatabase.repos.MyContactRepo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -94,8 +88,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         withContext(IO) {
             val inputStream = requireActivity().contentResolver.openInputStream(data?.data!!)
             bitmap = BitmapFactory.decodeStream(inputStream)
-            //bitmapop.value = bitmap
-
         }
         return bitmap
     }
