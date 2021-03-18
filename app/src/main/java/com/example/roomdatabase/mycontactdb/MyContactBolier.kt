@@ -18,11 +18,6 @@ abstract class MyContactBolier: RoomDatabase() {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance != null) {
-                    /*instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        MyContactBolier::class.java,
-                        "${MainActivity.MYCONTACTDETAIL}"
-                    ).build()*/
                         return instance
                 }
 
