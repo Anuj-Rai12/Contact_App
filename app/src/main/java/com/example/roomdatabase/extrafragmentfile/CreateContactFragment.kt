@@ -30,7 +30,7 @@ class CreateContactFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        //(activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create_contact, container, false)
         myViewModelFun()
@@ -51,9 +51,8 @@ class CreateContactFragment : Fragment() {
         val request = ImageRequest.Builder(requireContext())
             .data("https://picsum.photos/200/300")
             .build()
-
-        val result = (loading.execute(request) as SuccessResult).drawable
-        return (result as BitmapDrawable).bitmap
+            val result = (loading.execute(request) as SuccessResult).drawable
+            return (result as BitmapDrawable).bitmap
     }
     private fun myBottomView() {
         binding.myfolationAdd.setOnClickListener {
