@@ -1,5 +1,6 @@
 package com.example.roomdatabase.myfragments
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,8 +19,8 @@ import com.example.roomdatabase.recyclecontact.MyContactRecycle
 
 class ContactFragment : Fragment() {
     private lateinit var binding: FragmentContactBinding
-    private lateinit var myViewModel:MyViewModel
-    private lateinit var myContactRecycle:MyContactRecycle
+    private lateinit var myViewModel: MyViewModel
+    private lateinit var myContactRecycle: MyContactRecycle
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +34,13 @@ class ContactFragment : Fragment() {
     }
 
     private fun myRecycleViewFun() {
-        binding.displayRecyclerView.layoutManager=RecyclerView.LinearLayoutManager
+        binding.displayRecyclerView.layoutManager = LinearLayoutManager(activity)
+        myContactRecycle = MyContactRecycle()
+        binding.displayRecyclerView.adapter = myContactRecycle
+        myViewModel.allTheData.observe(viewLifecycleOwner, {
+            myContactRecycle.setAllTheData(it)
+            myContactRecycle.notifyDataSetChanged()
+        })
     }
 
     private fun myViewModelFun() {
@@ -41,6 +48,7 @@ class ContactFragment : Fragment() {
             ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
         binding.lifecycleOwner = this
     }
+
     private fun gotoCreateContact() =
         view?.findNavController()?.navigate(R.id.action_contactFragment_to_createContactFragment)
 
