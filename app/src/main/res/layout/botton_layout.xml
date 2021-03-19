@@ -18,8 +18,9 @@
         android:fontFamily="@font/allerta"
         android:layout_marginTop="8dp"
         android:gravity="center"
+        android:textColor="@color/black"
         android:text="@string/choose_option"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <View
@@ -31,28 +32,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/allerta"
-        android:gravity="center"
         android:text="@string/open_camera"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="30dp" />
 
     <TextView
         android:id="@+id/btnopengal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:fontFamily="@font/allerta"
         android:text="@string/open_gallery"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
 </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

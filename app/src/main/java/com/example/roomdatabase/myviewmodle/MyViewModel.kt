@@ -45,12 +45,13 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
             MyContact(
                 0,
                 inputFirstName.value!!,
-                inputFirstName.value!!,
+                inputLastName.value!!,
                 phoneNo.value!!,
                 bitmap!!
             )
         )
         _snackbarmsg.value = Event("Profile is Created Successfully")
+        intial()
     }
 
     private fun insert(myContact: MyContact): Job = viewModelScope.launch {
@@ -68,5 +69,11 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     private fun deleteAll(): Job = viewModelScope.launch {
         repo.deleteAllData()
     }
-
+private fun intial()
+{
+    inputFirstName.value=null
+    inputLastName.value=null
+    phoneNo.value=null
+    bitmap=null
+}
 }

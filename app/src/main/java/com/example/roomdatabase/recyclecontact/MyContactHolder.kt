@@ -4,7 +4,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.roomdatabase.databinding.DisplayDetailBinding
 import com.example.roomdatabase.mycontactdb.MyContact
 
-class MyContactHolder(itemView: DisplayDetailBinding) : RecyclerView.ViewHolder(itemView.root) {
-    fun setRecycle(currObj: MyContact) {
+class MyContactHolder(val binding: DisplayDetailBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun binding(currObj: MyContact) {
+        binding.myrecyprofile.setImageBitmap(currObj.profilePicture)
+        binding.myrecyphone.text=currObj.firstName+""+currObj.lastName
     }
 }
