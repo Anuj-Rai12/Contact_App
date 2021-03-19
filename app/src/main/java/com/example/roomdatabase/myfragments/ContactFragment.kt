@@ -9,13 +9,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentContactBinding
 import com.example.roomdatabase.myviewmodle.MyViewModel
+import com.example.roomdatabase.recyclecontact.MyContactRecycle
 
 class ContactFragment : Fragment() {
     private lateinit var binding: FragmentContactBinding
     private lateinit var myViewModel:MyViewModel
+    private lateinit var myContactRecycle:MyContactRecycle
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +33,7 @@ class ContactFragment : Fragment() {
     }
 
     private fun myRecycleViewFun() {
-
+        binding.displayRecyclerView.layoutManager=RecyclerView.LinearLayoutManager
     }
 
     private fun myViewModelFun() {
