@@ -67,6 +67,7 @@
                     android:padding="20dp">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutfirstname"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -74,7 +75,6 @@
                         android:textColorHint="@color/black"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeWidthFocused="2dp"
-                        app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:hintTextColor="@color/black"
                         app:startIconDrawable="@drawable/ic_edit">
@@ -85,6 +85,7 @@
                             android:layout_height="match_parent"
                             android:cursorVisible="false"
                             android:focusable="false"
+                            android:text="@={myvariable.inputFirstName}"
                             android:focusableInTouchMode="true"
                             android:inputType="none" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -98,7 +99,6 @@
                         android:textColorHint="@color/black"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeWidthFocused="2dp"
-                        app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:hintTextColor="@color/black"
                         app:startIconDrawable="@drawable/ic_baseline_person_24">
@@ -109,6 +109,7 @@
                             android:layout_height="match_parent"
                             android:cursorVisible="false"
                             android:focusable="false"
+                            android:text="@={myvariable.inputLastName}"
                             android:focusableInTouchMode="true"
                             android:inputType="none" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -122,7 +123,6 @@
                         android:textColorHint="@color/black"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeWidthFocused="2dp"
-                        app:endIconMode="clear_text"
                         app:endIconTint="@color/black"
                         app:hintTextColor="@color/black"
                         app:startIconDrawable="@drawable/ic_call">
@@ -133,6 +133,7 @@
                             android:layout_height="match_parent"
                             android:cursorVisible="false"
                             android:focusable="false"
+                            android:text="@={myvariable.phoneNo}"
                             android:focusableInTouchMode="true"
                             android:inputType="none" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -242,7 +243,7 @@
             </androidx.core.widget.NestedScrollView>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/myfolationAdd"
+                android:id="@+id/myfolationcall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"

@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentContactBinding
+import com.example.roomdatabase.mycontactdb.MyContact
 import com.example.roomdatabase.myviewmodle.MyViewModel
 import com.example.roomdatabase.recyclecontact.MyContactRecycle
 
@@ -38,7 +39,7 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun myRecycleViewFun() {
         binding.displayRecyclerView.layoutManager = LinearLayoutManager(activity)
-        myContactRecycle = MyContactRecycle()
+        myContactRecycle = MyContactRecycle{selected:MyContact -> itemSelected(selected)}
         binding.displayRecyclerView.adapter = myContactRecycle
         myViewModel.allTheData.observe(viewLifecycleOwner, {
             myContactRecycle.setAllTheData(it)
@@ -55,10 +56,18 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun gotoCreateContact() =
         view?.findNavController()?.navigate(R.id.action_contactFragment_to_createContactFragment)
 
+    private fun gotoDisplayContact() =
+        view?.findNavController()?.navigate(R.id.action_contactFragment_to_displayContactFragment)
+
+    private fun itemSelected(myContact: MyContact) {
+        myViewModel.updateOrDelete(myContact)
+        gotoDisplayContact()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.my_dot_mnu, menu)
         val search = menu.findItem(R.id.searchmyval)
-        val del=menu.findItem(R.id.deleteAll)
+        val del = menu.findItem(R.id.deleteAll)
         val searchView = search?.actionView as? SearchView
         searchView?.isSubmitButtonEnabled = true
         searchView?.setOnQueryTextListener(this)
@@ -80,13 +89,13 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
         if (newText != null) {
             getResult(newText)
         }
-            return true
+        return true
     }
 
     private fun getResult(string: String) {
         val searchQuery = "%$string%"
         myViewModel.searchMyRes(searchQuery).observe(viewLifecycleOwner, {
-                myContactRecycle.setAllTheData(it)
+            myContactRecycle.setAllTheData(it)
             myContactRecycle.notifyDataSetChanged()
         })
     }

@@ -1,8 +1,12 @@
 package com.example.roomdatabase.myviewmodle
 
 import android.app.Application
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.view.View
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.*
 import com.example.roomdatabase.mycontactdb.MyContact
@@ -37,6 +41,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     val phoneNo = MutableLiveData<String?>()
 
     var bitmap: Bitmap? = null
+
     fun setData(view: View) {
         if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
             _snackbarmsg.value = Event("Profile is not Created")
@@ -63,7 +68,12 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     fun searchMyRes(string: String): LiveData<List<MyContact>> {
         return repo.searchResult(string)
     }
-
+    fun updateOrDelete(myContact: MyContact) {
+        inputFirstName.value = myContact.firstName
+        inputLastName.value = myContact.lastName
+        phoneNo.value = myContact.phoneNumber
+        bitmap = myContact.profilePicture
+    }
     private fun insert(myContact: MyContact): Job = viewModelScope.launch {
         repo.insertContact(myContact)
     }
@@ -79,16 +89,6 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     private fun deleteAll(): Job = viewModelScope.launch {
         repo.deleteAllData()
     }
-
-    /*private fun searchResult(string: String): LiveData<List<MyContact>> {
-
-         viewModelScope.launch {
-             var data:LiveData<List<MyContact>>
-            data =repo.searchResult(string)
-        }
-
-    }*/
-
     private fun initial() {
         inputFirstName.value = null
         inputLastName.value = null

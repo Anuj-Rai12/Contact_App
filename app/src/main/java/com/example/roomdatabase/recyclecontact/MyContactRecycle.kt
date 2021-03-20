@@ -8,7 +8,7 @@ import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.DisplayDetailBinding
 import com.example.roomdatabase.mycontactdb.MyContact
 
-class MyContactRecycle() : RecyclerView.Adapter<MyContactHolder>() {
+class MyContactRecycle(private  val function: (MyContact) -> Unit) : RecyclerView.Adapter<MyContactHolder>() {
     private var myAllMyContact= ArrayList<MyContact>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyContactHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -19,7 +19,7 @@ class MyContactRecycle() : RecyclerView.Adapter<MyContactHolder>() {
 
     override fun onBindViewHolder(holder: MyContactHolder, position: Int) {
         var currObj=myAllMyContact[position]
-        holder.binding(currObj)
+        holder.binding(currObj,function)
     }
 
     override fun getItemCount(): Int {

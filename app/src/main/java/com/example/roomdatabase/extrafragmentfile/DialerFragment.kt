@@ -27,30 +27,29 @@ class DialerFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dailer, container, false)
          val blink = AnimationUtils.loadAnimation(activity, R.anim.blink_animation)
          val downToUp = AnimationUtils.loadAnimation(activity, R.anim.down_to_up)
-        //val phoneno=binding.myphoneno.text
         binding.mycallbutton.startAnimation(blink)
         binding.circleimg.startAnimation(downToUp)
-        //val namecode=binding.codepicker!!.selectedCountryCode
-       // Toast.makeText(activity, "namecode =$namecode", Toast.LENGTH_SHORT).show()
-        binding.mycallbutton.setOnClickListener {
-
-            if(checkCallPermission())
-            {
-                val intent=Intent(Intent.ACTION_CALL)
-                intent.setData(Uri.parse("tel:+${binding.codepicker!!.selectedCountryCode+binding.myphoneno.text}"))
-                startActivity(intent)
-            }
-            else
-                Toast.makeText(activity, "Call permission not given", Toast.LENGTH_SHORT).show()
-        }
-        binding.backArrow.setOnClickListener { gotcallhistory() }
+        binding.mycallbutton.setOnClickListener {calls()}
+        binding.backArrow.setOnClickListener { gotCallHistory() }
         return binding.root
     }
-    private fun gotcallhistory()=view?.findNavController()?.navigate(R.id.action_dailerFragment_to_callFragment)
+    private fun calls()
+    {
+        if(checkCallPermission())
+        {
+            val intent=Intent(Intent.ACTION_CALL)
+            intent.setData(Uri.parse("tel:+${binding.codepicker!!.selectedCountryCode+binding.myphoneno.text}"))
+            startActivity(intent)
+        }
+        else
+            Toast.makeText(activity, "Call permission not given", Toast.LENGTH_SHORT).show()
+    }
+    private fun gotCallHistory()=view?.findNavController()?.navigate(R.id.action_dailerFragment_to_callFragment)
     private fun checkCallPermission() = (context?.let {
         ActivityCompat.checkSelfPermission(
             it,
             Manifest.permission.CALL_PHONE
         )
     } == PackageManager.PERMISSION_GRANTED)
+
 }
