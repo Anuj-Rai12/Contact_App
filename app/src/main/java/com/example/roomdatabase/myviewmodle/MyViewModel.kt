@@ -28,6 +28,9 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         allTheData = repo.dao
     }
 
+    //UpdateOrDelete bool
+    private var updateOrDelete: Boolean = false
+    private var myContact: MyContact?=null
     //Messages
     private var _snackbarmsg = MutableLiveData<Event<String>>()
     val snackbarmsg: LiveData<Event<String>>
@@ -41,24 +44,33 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     val phoneNo = MutableLiveData<String?>()
 
     var bitmap: Bitmap? = null
-
+init {
+    initial()
+}
     fun setData(view: View) {
-        if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
-            _snackbarmsg.value = Event("Profile is not Created")
+        if (updateOrDelete)
+        {
+            //update
             initial()
-            return
         }
-        insert(
-            MyContact(
-                0,
-                inputFirstName.value!!,
-                inputLastName.value!!,
-                phoneNo.value!!,
-                bitmap!!
+        else{
+            if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
+                _snackbarmsg.value = Event("Profile is not Created")
+                initial()
+                return
+            }
+            insert(
+                MyContact(
+                    0,
+                    inputFirstName.value!!,
+                    inputLastName.value!!,
+                    phoneNo.value!!,
+                    bitmap!!
+                )
             )
-        )
-        _snackbarmsg.value = Event("Profile is Created Successfully")
-        initial()
+            _snackbarmsg.value = Event("Profile is Created Successfully")
+            initial()
+        }
     }
 
     fun deleteAllData() {
@@ -68,12 +80,16 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     fun searchMyRes(string: String): LiveData<List<MyContact>> {
         return repo.searchResult(string)
     }
+
     fun updateOrDelete(myContact: MyContact) {
         inputFirstName.value = myContact.firstName
         inputLastName.value = myContact.lastName
         phoneNo.value = myContact.phoneNumber
         bitmap = myContact.profilePicture
+        updateOrDelete=true
+        this.myContact=myContact
     }
+
     private fun insert(myContact: MyContact): Job = viewModelScope.launch {
         repo.insertContact(myContact)
     }
@@ -89,10 +105,13 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     private fun deleteAll(): Job = viewModelScope.launch {
         repo.deleteAllData()
     }
-    private fun initial() {
+
+    fun initial() {
         inputFirstName.value = null
         inputLastName.value = null
         phoneNo.value = null
         bitmap = null
+        updateOrDelete=false
+        myContact=null
     }
 }

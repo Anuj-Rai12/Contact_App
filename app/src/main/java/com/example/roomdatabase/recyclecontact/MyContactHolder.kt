@@ -8,9 +8,6 @@ class MyContactHolder(val binding: DisplayDetailBinding) : RecyclerView.ViewHold
     fun binding(currObj: MyContact, function: (MyContact) -> Unit) {
         binding.myrecyprofile.setImageBitmap(currObj.profilePicture)
         binding.myrecyphone.text=currObj.firstName+""+currObj.lastName
-        binding.recyArrow.setOnClickListener {
-            function(currObj)
-        }
         binding.mylayout.setOnClickListener {
             function(currObj)
         }

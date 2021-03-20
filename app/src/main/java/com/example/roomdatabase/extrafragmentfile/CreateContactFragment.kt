@@ -18,10 +18,8 @@ import com.example.roomdatabase.MainActivity.Companion.getmybitmap
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentCreateContactBinding
 import com.example.roomdatabase.myviewmodle.MyViewModel
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class CreateContactFragment : Fragment() {
     private lateinit var binding: FragmentCreateContactBinding
@@ -64,7 +62,6 @@ class CreateContactFragment : Fragment() {
             lifecycleScope.launch {
                 val deferred=async {  getBitmap()}
                 if (deferred.await()!=null) {
-                    /*val deferred=async(IO) {  getBitmap()}*/
                     binding.myprofile.setImageBitmap(deferred.await())
                     myViewModel.bitmap = deferred.await()
                 }
@@ -77,5 +74,6 @@ class CreateContactFragment : Fragment() {
             ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
         binding.myvariable = myViewModel
         binding.lifecycleOwner = this
+        myViewModel.initial()
     }
 }
