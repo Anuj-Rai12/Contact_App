@@ -38,7 +38,9 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     var bitmap: Bitmap? = null
     fun setData(view: View) {
-        if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly()) {
+        if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
+            _snackbarmsg.value = Event("Profile is not Created")
+            initial()
             return
         }
         insert(
@@ -51,7 +53,15 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
             )
         )
         _snackbarmsg.value = Event("Profile is Created Successfully")
-        intial()
+        initial()
+    }
+
+    fun deleteAllData() {
+        deleteAll()
+    }
+
+    fun searchMyRes(string: String): LiveData<List<MyContact>> {
+        return repo.searchResult(string)
     }
 
     private fun insert(myContact: MyContact): Job = viewModelScope.launch {
@@ -69,11 +79,20 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     private fun deleteAll(): Job = viewModelScope.launch {
         repo.deleteAllData()
     }
-private fun intial()
-{
-    inputFirstName.value=null
-    inputLastName.value=null
-    phoneNo.value=null
-    bitmap=null
-}
+
+    /*private fun searchResult(string: String): LiveData<List<MyContact>> {
+
+         viewModelScope.launch {
+             var data:LiveData<List<MyContact>>
+            data =repo.searchResult(string)
+        }
+
+    }*/
+
+    private fun initial() {
+        inputFirstName.value = null
+        inputLastName.value = null
+        phoneNo.value = null
+        bitmap = null
+    }
 }

@@ -1,6 +1,4 @@
 package com.example.roomdatabase.mycontactdb
-
-import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
@@ -21,4 +19,6 @@ interface MyContactDao {
     @Query("Select *From My_Contact_Detail")
     fun displayAllData(): LiveData<List<MyContact>>
 
+    @Query("Select *From My_Contact_Detail where FirstName Like:searchQuery or LastName Like:searchQuery or PhoneNumber Like :searchQuery")
+    fun searchResult(searchQuery: String): LiveData<List<MyContact>>
 }

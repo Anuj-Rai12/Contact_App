@@ -7,8 +7,8 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.graphics.createBitmap
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -20,9 +20,10 @@ import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.example.roomdatabase.databinding.ActivityMainBinding
-import com.example.roomdatabase.mycontactdb.MyContactBolier
-import com.example.roomdatabase.mycontactdb.MyContactDao
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -40,7 +41,8 @@ class MainActivity : AppCompatActivity() {
         //getSupportActionBar()?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         lifecycleScope.launch {
-            getmybitmap=getBitmap()
+            val deferred=async {  getBitmap()}
+            getmybitmap=deferred.await()
         }
         requestPermission()
         navController = findNavController(R.id.fragment)
@@ -79,14 +81,19 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, collectAllPermission.toTypedArray(), 101)
     }
 
-    private suspend fun getBitmap(): Bitmap {
+    private suspend fun getBitmap(): Bitmap? {
         val loading = ImageLoader(this)
         val request = ImageRequest.Builder(this)
             .data("https://avatars.githubusercontent.com/u/63039156?s=400&u=7c38d67ee6b4ec2d5fbaffd9760544c0d981b16f&v=4")
             .build()
 
-        val result = (loading.execute(request) as SuccessResult).drawable
-        return (result as BitmapDrawable).bitmap
+        return try {
+            val result = (loading.execute(request) as SuccessResult).drawable
+            (result as BitmapDrawable).bitmap
+        } catch (e:Exception) {
+            Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
+            null
+        }
     }
 
     override fun onRequestPermissionsResult(
