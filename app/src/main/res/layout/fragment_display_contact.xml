@@ -160,6 +160,7 @@
                                 android:id="@+id/favaccount"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
+                                android:onClick="@{myvariable::fav}"
                                 android:layout_centerInParent="true"
                                 android:background="@drawable/hearicon" />
 
@@ -219,6 +220,7 @@
                                 android:id="@+id/edit_it"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
+                                android:onClick="@{myvariable::edit}"
                                 android:layout_centerInParent="true"
                                 android:background="@drawable/editonce" />
                         </RelativeLayout>

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.*
+import com.example.roomdatabase.R
 import com.example.roomdatabase.mycontactdb.MyContact
 import com.example.roomdatabase.mycontactdb.MyContactBolier
 import com.example.roomdatabase.repos.MyContactRepo
@@ -30,7 +31,8 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     //UpdateOrDelete bool
     private var updateOrDelete: Boolean = false
-    private var myContact: MyContact?=null
+    private lateinit var myContact: MyContact
+
     //Messages
     private var _snackbarmsg = MutableLiveData<Event<String>>()
     val snackbarmsg: LiveData<Event<String>>
@@ -44,16 +46,16 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     val phoneNo = MutableLiveData<String?>()
 
     var bitmap: Bitmap? = null
-init {
-    initial()
-}
+
+    init {
+        initial()
+    }
+
     fun setData(view: View) {
-        if (updateOrDelete)
-        {
+        if (updateOrDelete) {
             //update
             initial()
-        }
-        else{
+        } else {
             if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
                 _snackbarmsg.value = Event("Profile is not Created")
                 initial()
@@ -74,7 +76,15 @@ init {
     }
 
     fun deleteAllData() {
-        deleteAll()
+        if (updateOrDelete) {
+            delete(myContact)
+            _snackbarmsg.value = Event("Profile is Deleted successfully")
+            initial()
+        } else {
+            deleteAll()
+            _snackbarmsg.value = Event("Profile is Deleted successfully")
+            initial()
+        }
     }
 
     fun searchMyRes(string: String): LiveData<List<MyContact>> {
@@ -86,8 +96,15 @@ init {
         inputLastName.value = myContact.lastName
         phoneNo.value = myContact.phoneNumber
         bitmap = myContact.profilePicture
-        updateOrDelete=true
-        this.myContact=myContact
+        updateOrDelete = true
+        this.myContact = myContact
+    }
+
+    fun fav(view: View) {
+        _snackbarmsg.value = Event("You have click Fav")
+    }
+    fun edit(view: View) {
+        _snackbarmsg.value = Event("You have click Edit")
     }
 
     private fun insert(myContact: MyContact): Job = viewModelScope.launch {
@@ -95,7 +112,7 @@ init {
     }
 
     private fun delete(myContact: MyContact): Job = viewModelScope.launch {
-        repo.updateContact(myContact)
+        repo.deleteSingleData(myContact)
     }
 
     private fun update(myContact: MyContact): Job = viewModelScope.launch {
@@ -111,7 +128,6 @@ init {
         inputLastName.value = null
         phoneNo.value = null
         bitmap = null
-        updateOrDelete=false
-        myContact=null
+        updateOrDelete = false
     }
 }
