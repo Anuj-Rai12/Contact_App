@@ -33,6 +33,7 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         myViewModelFun()
         myRecycleViewFun()
+        myViewModel.actionOp="ContactFragment"
         binding.addContact.setOnClickListener { gotoCreateContact() }
         return binding.root
     }

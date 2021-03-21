@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentDisplayContactBinding
 import com.example.roomdatabase.myviewmodle.MyViewModel
@@ -42,7 +43,7 @@ class DisplayContactFragment : Fragment() {
         binding.myprofile.setImageBitmap(myViewModel.bitmap)
         binding.myfolationcall.setOnClickListener { calls() }
         binding.share.setOnClickListener {
-            val str = binding.firstname.text.toString() +" "+ binding.Lastname.text.toString()
+            val str = binding.firstname.text.toString() + " " + binding.Lastname.text.toString()
             val phoneNumber = binding.myphoneno.text.toString()
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -55,7 +56,19 @@ class DisplayContactFragment : Fragment() {
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
         }
-        binding.deleteaccount.setOnClickListener { myViewModel.deleteAllData() }
+        binding.deleteaccount.setOnClickListener {
+            myViewModel.deleteAllData()
+            when (myViewModel.actionOp) {
+                "ContactFragment" -> {
+                    it.findNavController()
+                        .navigate(R.id.action_displayContactFragment_to_contactFragment)
+                }
+                "FavFragment" -> {
+                    it.findNavController()
+                        .navigate(R.id.action_displayContactFragment_to_favFragment)
+                }
+            }
+        }
         return binding.root
     }
 
@@ -78,6 +91,7 @@ class DisplayContactFragment : Fragment() {
                 )
             }
     }
+
     private fun checkCallPermission() = (context?.let {
         ActivityCompat.checkSelfPermission(
             it,

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.roomdatabase.MainActivity
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.DisplayDetailBinding
 import com.example.roomdatabase.mycontactdb.MyContact

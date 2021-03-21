@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 
 class MyViewModel(application: Application) : AndroidViewModel(application) {
 
+    //Activity/Fragment Checker
+    var actionOp:String?=null
     //Repository linking boz of to avoiding many instances
     private val repo: MyContactRepo
     val allTheData: LiveData<List<MyContact>>

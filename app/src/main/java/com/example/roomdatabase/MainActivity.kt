@@ -24,13 +24,26 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import kotlin.math.floor
 
 class MainActivity : AppCompatActivity() {
     companion object {
         const val MYCONTACTDETAIL = "My_Contact_Detail"
         const val MYCALLDETAIL = "My_CALL_Detail"
-        const val MYFAVDETAIL = "My_FAV_Detail"
         var getmybitmap: Bitmap? = null
+
+        val myColor =
+            listOf<Int>(
+                R.color.anujgreen,
+                R.color.anujcherryred,
+                R.color.purple_500,
+                R.color.black,
+                R.color.teal_700,
+                R.color.anujpurbles,
+                R.color.anujorange
+            )
+
+        fun randomNumber(value: Int): Int = floor((Math.random() * value)).toInt()
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -41,8 +54,8 @@ class MainActivity : AppCompatActivity() {
         //getSupportActionBar()?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         lifecycleScope.launch {
-            val deferred=async {  getBitmap()}
-            getmybitmap=deferred.await()
+            val deferred = async { getBitmap() }
+            getmybitmap = deferred.await()
         }
         requestPermission()
         navController = findNavController(R.id.fragment)
@@ -90,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         return try {
             val result = (loading.execute(request) as SuccessResult).drawable
             (result as BitmapDrawable).bitmap
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
             null
         }
@@ -112,7 +125,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController=findNavController(R.id.fragment)
-        return navController.navigateUp()||super.onSupportNavigateUp()
+        val navController = findNavController(R.id.fragment)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

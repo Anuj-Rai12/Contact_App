@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.roomdatabase.MainActivity
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FavLayoutBinding
 import com.example.roomdatabase.mycontactdb.MyContact
@@ -20,7 +21,7 @@ class MyFavRecycle(private val function: (MyContact) -> Unit) :RecyclerView.Adap
 
     override fun onBindViewHolder(holder: MyFavHolder, position: Int) {
         var currObj=arrayList[position]
-        holder.binding(currObj,function)
+        holder.binding(currObj,MainActivity.randomNumber(MainActivity.myColor.size -1),function)
     }
 
     override fun getItemCount(): Int {

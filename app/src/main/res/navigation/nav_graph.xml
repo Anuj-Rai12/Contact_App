@@ -82,5 +82,16 @@
         android:id="@+id/displayContactFragment"
         android:name="com.example.roomdatabase.extrafragmentfile.DisplayContactFragment"
         android:label="fragment_display_contact"
-        tools:layout="@layout/fragment_display_contact" />
+        tools:layout="@layout/fragment_display_contact" >
+        <action
+            android:id="@+id/action_displayContactFragment_to_favFragment"
+            app:destination="@id/favFragment"
+            app:enterAnim="@anim/pop_enter_anim"
+            app:exitAnim="@anim/pop_exit_anim" />
+        <action
+            android:id="@+id/action_displayContactFragment_to_contactFragment"
+            app:destination="@id/contactFragment"
+            app:enterAnim="@anim/pop_enter_anim"
+            app:exitAnim="@anim/pop_exit_anim" />
+    </fragment>
 </navigation>

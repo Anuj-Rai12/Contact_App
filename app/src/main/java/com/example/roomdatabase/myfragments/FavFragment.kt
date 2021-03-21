@@ -1,11 +1,13 @@
 package com.example.roomdatabase.myfragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,27 +23,15 @@ class FavFragment : Fragment() {
     private lateinit var myViewModel: MyViewModel
     private lateinit var myFavRecycle: MyFavRecycle
 
-    companion object {
-        val myColor =
-            listOf<Int>(
-                R.color.anujgreen,
-                R.color.anujcherryred,
-                R.color.purple_500,
-                R.color.black,
-                R.color.teal_700,
-                R.color.anujpurbles,
-                R.color.anujorange
-            )
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fav, container, false)
         myViewModelFun()
         myFavRecycleFun()
-        getResult("1")
+        getResult()
+        myViewModel.actionOp = "FavFragment"
         return binding.root
     }
 
@@ -53,7 +43,7 @@ class FavFragment : Fragment() {
         binding.recyclerView.adapter = myFavRecycle
     }
 
-    private fun getResult(string: String) {
+    private fun getResult(string: String = "1") {
         val searchQuery = "%$string%"
         myViewModel.searchMyFav(searchQuery).observe(viewLifecycleOwner, {
             myFavRecycle.setMyData(it)
