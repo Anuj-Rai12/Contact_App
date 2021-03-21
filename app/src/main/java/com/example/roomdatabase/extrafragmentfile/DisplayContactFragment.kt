@@ -42,7 +42,7 @@ class DisplayContactFragment : Fragment() {
         binding.myprofile.setImageBitmap(myViewModel.bitmap)
         binding.myfolationcall.setOnClickListener { calls() }
         binding.share.setOnClickListener {
-            val str = binding.firstname.text.toString() + binding.Lastname.text.toString()
+            val str = binding.firstname.text.toString() +" "+ binding.Lastname.text.toString()
             val phoneNumber = binding.myphoneno.text.toString()
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -62,7 +62,6 @@ class DisplayContactFragment : Fragment() {
     private fun myViewModelFun() {
         myViewModel = ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
         binding.myvariable = myViewModel
-        binding.myfolationcall.setOnClickListener { calls() }
         binding.lifecycleOwner = this
     }
 

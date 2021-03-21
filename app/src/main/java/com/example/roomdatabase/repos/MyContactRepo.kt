@@ -26,4 +26,7 @@ class MyContactRepo(val myContactDao: MyContactDao) {
     fun searchResult(searchQuery: String): LiveData<List<MyContact>> {
         return myContactDao.searchResult(searchQuery)
     }
+    fun searchFav(searchQuery: String): LiveData<List<MyContact>> {
+        return myContactDao.searchFav(searchQuery)
+    }
 }

@@ -11,6 +11,10 @@ import com.example.roomdatabase.MainActivity.Companion.MYCONTACTDETAIL
 data class MyContact(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
+
+    @ColumnInfo(name = "MyFavorite")
+    var favor: String,
+
     @ColumnInfo(name = "FirstName")
     var firstName: String,
 

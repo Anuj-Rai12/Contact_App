@@ -1,15 +1,10 @@
 package com.example.roomdatabase.myviewmodle
 
 import android.app.Application
-import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.*
-import com.example.roomdatabase.R
 import com.example.roomdatabase.mycontactdb.MyContact
 import com.example.roomdatabase.mycontactdb.MyContactBolier
 import com.example.roomdatabase.repos.MyContactRepo
@@ -64,6 +59,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
             insert(
                 MyContact(
                     0,
+                    "0",
                     inputFirstName.value!!,
                     inputLastName.value!!,
                     phoneNo.value!!,
@@ -91,6 +87,10 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         return repo.searchResult(string)
     }
 
+    fun searchMyFav(string: String): LiveData<List<MyContact>> {
+        return repo.searchFav(string)
+    }
+
     fun updateOrDelete(myContact: MyContact) {
         inputFirstName.value = myContact.firstName
         inputLastName.value = myContact.lastName
@@ -100,9 +100,16 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         this.myContact = myContact
     }
 
-    fun fav(view: View) {
-        _snackbarmsg.value = Event("You have click Fav")
+    fun fav(view: View) = if (myContact.favor == "0") {
+        favOrUpdate("1")
+        myContact.favor = "1"
+        _snackbarmsg.value = Event("This is you Favorite profile")
+    } else {
+        favOrUpdate("0")
+        myContact.favor = "0"
+        _snackbarmsg.value = Event("Favorite profile is Removed")
     }
+
     fun edit(view: View) {
         _snackbarmsg.value = Event("You have click Edit")
     }
@@ -121,6 +128,19 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun deleteAll(): Job = viewModelScope.launch {
         repo.deleteAllData()
+    }
+
+    private fun favOrUpdate(int: String) {
+        update(
+            MyContact(
+                myContact.id,
+                int,
+                myContact.firstName,
+                myContact.lastName,
+                myContact.phoneNumber,
+                myContact.profilePicture
+            )
+        )
     }
 
     fun initial() {

@@ -21,4 +21,7 @@ interface MyContactDao {
 
     @Query("Select *From My_Contact_Detail where FirstName Like:searchQuery or LastName Like:searchQuery or PhoneNumber Like :searchQuery")
     fun searchResult(searchQuery: String): LiveData<List<MyContact>>
+
+    @Query("Select *From My_Contact_Detail where MyFavorite Like:searchFavQuery")
+    fun searchFav(searchFavQuery: String):LiveData<List<MyContact>>
 }
