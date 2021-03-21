@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-    <variable
-        name="myvariable"
-        type="com.example.roomdatabase.myviewmodle.MyViewModel" />
+
+        <variable
+            name="myvariable"
+            type="com.example.roomdatabase.myviewmodle.MyViewModel" />
     </data>
 
     <FrameLayout
@@ -15,6 +16,7 @@
         tools:context="com.example.roomdatabase.extrafragmentfile.CreateContactFragment">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/mylayoutback"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/anujlightred">
@@ -31,8 +33,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/anujlightred"
                     android:fitsSystemWindows="true"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:title="Add Contact">
+                    app:layout_scrollFlags="scroll|enterAlways">
 
                     <ImageView
                         android:id="@+id/myprofile"
@@ -70,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="First Name"
-                        android:textColorHint="@color/black"
+                        android:textColorHint="@color/anujlightgrey"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
@@ -82,8 +83,8 @@
                             android:id="@+id/firstname"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@={myvariable.inputFirstName}"
-                            android:inputType="text" />
+                            android:inputType="text"
+                            android:text="@={myvariable.inputFirstName}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -92,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:hint="Last Name"
-                        android:textColorHint="@color/black"
+                        android:textColorHint="@color/anujlightgrey"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
@@ -104,8 +105,8 @@
                             android:id="@+id/Lastname"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@={myvariable.inputLastName}"
-                            android:inputType="text" />
+                            android:inputType="text"
+                            android:text="@={myvariable.inputLastName}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
@@ -119,7 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:hint="Phone Number"
-                            android:textColorHint="@color/black"
+                            android:textColorHint="@color/anujlightgrey"
                             app:boxStrokeColor="@color/black"
                             app:boxStrokeWidthFocused="2dp"
                             app:endIconMode="clear_text"
@@ -131,22 +132,27 @@
                                 android:id="@+id/myphoneno"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="@={myvariable.phoneNo}"
-                                android:inputType="phone" />
+                                android:inputType="phone"
+                                android:text="@={myvariable.phoneNo}" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
 
                     <Button
                         android:id="@+id/createacc"
-                        android:layout_width="match_parent"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:backgroundTint="#ee5c3f"
                         android:elevation="5dp"
+                        android:maxWidth="200dp"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
                         android:onClick="@{myvariable::setData}"
                         android:text="@string/create_pro"
+                        android:textAllCaps="false"
                         android:textStyle="normal" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="30dp" />
@@ -176,10 +182,10 @@
                 style="?android:attr/progressBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

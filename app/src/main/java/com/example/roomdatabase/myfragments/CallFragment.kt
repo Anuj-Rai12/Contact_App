@@ -24,7 +24,6 @@ class CallFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_call, container, false)
         animation = AnimationUtils.loadAnimation(activity, R.anim.green_expolsion).apply {
             duration = 700

@@ -16,6 +16,7 @@
         tools:context="com.example.roomdatabase.extrafragmentfile.DisplayContactFragment">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/mylayoutback"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/anujlightred">
@@ -32,8 +33,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/anujlightred"
                     android:fitsSystemWindows="true"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:title="Contact Detail">
+                    app:layout_scrollFlags="scroll|enterAlways">
 
                     <ImageView
                         android:id="@+id/myprofile"
@@ -72,12 +72,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="First name"
-                        android:textColorHint="@color/black"
-                        app:boxStrokeColor="@color/black"
-                        app:boxStrokeWidthFocused="2dp"
+                        android:textColorHint="@color/anujlightgrey"
+                        app:boxStrokeColor="@color/white"
+                        app:boxStrokeWidthFocused="0dp"
                         app:endIconTint="@color/black"
                         app:hintTextColor="@color/black"
-                        app:startIconDrawable="@drawable/ic_edit">
+                        app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/firstname"
@@ -96,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:hint="Last Name"
-                        android:textColorHint="@color/black"
+                        android:textColorHint="@color/anujlightgrey"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconTint="@color/black"
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:hint="Phone Number"
-                        android:textColorHint="@color/black"
+                        android:textColorHint="@color/anujlightgrey"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconTint="@color/black"
@@ -216,29 +216,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <View
-                                android:id="@+id/edit_it"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:onClick="@{myvariable::edit}"
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/myfolationcall2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:backgroundTint="@color/anujgreen"
+                                android:clickable="true"
                                 android:layout_centerInParent="true"
-                                android:background="@drawable/editonce" />
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
+                                android:src="@drawable/ic_call"
+                                app:fabSize="normal" />
+                            <View
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="Edit" />
+                                android:layout_margin="10dp"
+                                />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>

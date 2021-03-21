@@ -16,6 +16,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentDailerBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class DialerFragment : Fragment() {
     private lateinit var binding: FragmentDailerBinding
@@ -24,14 +29,20 @@ class DialerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        CoroutineScope(Main).launch {
+            statusBar()
+        }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dailer, container, false)
          val blink = AnimationUtils.loadAnimation(activity, R.anim.blink_animation)
-         val downToUp = AnimationUtils.loadAnimation(activity, R.anim.down_to_up)
         binding.mycallbutton.startAnimation(blink)
-        binding.circleimg.startAnimation(downToUp)
         binding.mycallbutton.setOnClickListener {calls()}
-        binding.backArrow.setOnClickListener { gotCallHistory() }
+        //binding.backArrow.setOnClickListener { gotCallHistory() }
         return binding.root
+    }
+    private suspend fun statusBar()
+    {
+        delay(150)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
     private fun calls()
     {

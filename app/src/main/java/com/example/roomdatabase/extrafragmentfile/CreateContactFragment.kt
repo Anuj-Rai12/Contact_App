@@ -18,6 +18,7 @@ import com.example.roomdatabase.MainActivity.Companion.getmybitmap
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentCreateContactBinding
 import com.example.roomdatabase.myviewmodle.MyViewModel
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -44,25 +45,30 @@ class CreateContactFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
         val loading = ImageLoader(requireContext())
         val request = ImageRequest.Builder(requireContext())
-            .data("https://picsum.photos/200/300")
+            .data("https://picsum.photos/800/800")
             .build()
         return try {
             val result = (loading.execute(request) as SuccessResult).drawable
             binding.progressBar.visibility = View.GONE
             (result as BitmapDrawable).bitmap
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             binding.progressBar.visibility = View.GONE
-            Toast.makeText(activity, "Oops Something went", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Oops Something went wrong", Toast.LENGTH_SHORT).show()
             getmybitmap
         }
     }
-
+private suspend fun setLayoutImg(bitImg: Deferred<Bitmap?>)
+{
+    val background = BitmapDrawable(resources, bitImg.await())
+    binding.mylayoutback.background = background
+}
     private fun myBottomView() {
         binding.myfolationAdd.setOnClickListener {
             lifecycleScope.launch {
                 val deferred=async {  getBitmap()}
                 if (deferred.await()!=null) {
                     binding.myprofile.setImageBitmap(deferred.await())
+                    setLayoutImg(deferred)
                     myViewModel.bitmap = deferred.await()
                 }
             }

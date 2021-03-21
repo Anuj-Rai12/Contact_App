@@ -20,7 +20,6 @@ import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.example.roomdatabase.databinding.ActivityMainBinding
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -104,8 +103,8 @@ class MainActivity : AppCompatActivity() {
             val result = (loading.execute(request) as SuccessResult).drawable
             (result as BitmapDrawable).bitmap
         } catch (e: Exception) {
-            Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
-            null
+                Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
+            getmybitmap
         }
     }
 

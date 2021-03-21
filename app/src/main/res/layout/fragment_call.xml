@@ -6,7 +6,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.roomdatabase.myfragments.CallFragment">
+        tools:context="com.example.roomdatabase.myfragments.CallFragment"
+        android:background="@color/anujlightgrey">
 
         <RelativeLayout
             android:layout_width="match_parent"

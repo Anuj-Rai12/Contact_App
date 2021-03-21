@@ -1,4 +1,5 @@
 package com.example.roomdatabase.mycontactdb
+
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
@@ -23,5 +24,5 @@ interface MyContactDao {
     fun searchResult(searchQuery: String): LiveData<List<MyContact>>
 
     @Query("Select *From My_Contact_Detail where MyFavorite Like:searchFavQuery")
-    fun searchFav(searchFavQuery: String):LiveData<List<MyContact>>
+    fun searchFav(searchFavQuery: String): LiveData<List<MyContact>>
 }
