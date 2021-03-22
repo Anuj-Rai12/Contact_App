@@ -107,5 +107,33 @@
             app:destination="@id/callFragment"
             app:enterAnim="@anim/pop_enter_anim"
             app:exitAnim="@anim/pop_exit_anim" />
+        <action
+            android:id="@+id/action_displayContactFragment_to_upadeFragment"
+            app:destination="@id/upadeFragment"
+            app:enterAnim="@anim/ente_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/upadeFragment"
+        android:name="com.example.roomdatabase.extrafragmentfile.UpdateFragment"
+        android:label="Update"
+        tools:layout="@layout/fragment_upade" >
+        <action
+            android:id="@+id/action_upadeFragment_to_favFragment"
+            app:destination="@id/favFragment"
+            app:enterAnim="@anim/pop_enter_anim"
+            app:exitAnim="@anim/pop_exit_anim" />
+        <action
+            android:id="@+id/action_upadeFragment_to_callFragment"
+            app:destination="@id/callFragment"
+            app:enterAnim="@anim/pop_enter_anim"
+            app:exitAnim="@anim/pop_exit_anim" />
+        <action
+            android:id="@+id/action_upadeFragment_to_contactFragment"
+            app:destination="@id/contactFragment"
+            app:enterAnim="@anim/pop_enter_anim"
+            app:exitAnim="@anim/pop_exit_anim" />
     </fragment>
 </navigation>

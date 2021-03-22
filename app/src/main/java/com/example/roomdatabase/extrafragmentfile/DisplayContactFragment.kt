@@ -41,7 +41,6 @@ class DisplayContactFragment : Fragment() {
         })
         val blink = AnimationUtils.loadAnimation(activity, R.anim.blink_animation)
         binding.myfolationcall.startAnimation(blink)
-        binding.myfolationcall2.startAnimation(blink)
         setBackGround()
         binding.myfolationcall.setOnClickListener { calls() }
         binding.myfolationcall2.setOnClickListener { calls() }
@@ -125,7 +124,7 @@ class DisplayContactFragment : Fragment() {
         inflater.inflate(R.menu.mnu_dot_contact, menu)
         val editMnu = menu.findItem(R.id.edithis)
         editMnu.setOnMenuItemClickListener {
-            Toast.makeText(activity, "Wait Boss", Toast.LENGTH_SHORT).show()
+            view?.findNavController()?.navigate(R.id.action_displayContactFragment_to_upadeFragment)
             return@setOnMenuItemClickListener true
         }
         return super.onCreateOptionsMenu(menu, inflater)

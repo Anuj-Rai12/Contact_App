@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     //Activity/Fragment Checker
-    var actionOp:String?=null
+    var actionOp: String? = null
+
     //Repository linking boz of to avoiding many instances
     private val repo: MyContactRepo
     val allTheData: LiveData<List<MyContact>>
@@ -49,10 +50,6 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun setData(view: View) {
-        if (updateOrDelete) {
-            //update
-            initial()
-        } else {
             if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
                 _snackbarmsg.value = Event("Profile is not Created")
                 initial()
@@ -71,7 +68,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
             _snackbarmsg.value = Event("Profile is Created Successfully")
             initial()
         }
-    }
+
 
     fun deleteAllData() {
         if (updateOrDelete) {
@@ -151,5 +148,27 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         phoneNo.value = null
         bitmap = null
         updateOrDelete = false
+    }
+
+    fun updateData() {
+        if (updateOrDelete) {
+            if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
+                _snackbarmsg.value = Event("Profile is Not Updated")
+              //  initial()
+                return
+            }
+            update(
+                MyContact(
+                    myContact.id,
+                    myContact.favor,
+                    inputFirstName.value!!,
+                    inputLastName.value!!,
+                    phoneNo.value!!,
+                    bitmap!!
+                )
+            )
+            _snackbarmsg.value = Event("Profile is Updated Successfully")
+            //initial()
+        }
     }
 }
