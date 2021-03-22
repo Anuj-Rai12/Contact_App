@@ -1,6 +1,5 @@
 package com.example.roomdatabase.extrafragmentfile
 
-
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,7 +17,6 @@ import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentDailerBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -36,7 +34,6 @@ class DialerFragment : Fragment() {
          val blink = AnimationUtils.loadAnimation(activity, R.anim.blink_animation)
         binding.mycallbutton.startAnimation(blink)
         binding.mycallbutton.setOnClickListener {calls()}
-        //binding.backArrow.setOnClickListener { gotCallHistory() }
         return binding.root
     }
     private suspend fun statusBar()
@@ -56,6 +53,7 @@ class DialerFragment : Fragment() {
             Toast.makeText(activity, "Call permission not given", Toast.LENGTH_SHORT).show()
     }
     private fun gotCallHistory()=view?.findNavController()?.navigate(R.id.action_dailerFragment_to_callFragment)
+
     private fun checkCallPermission() = (context?.let {
         ActivityCompat.checkSelfPermission(
             it,

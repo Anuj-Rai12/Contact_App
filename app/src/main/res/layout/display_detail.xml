@@ -10,6 +10,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:cardCornerRadius="15dp"
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true">
 
@@ -17,7 +18,7 @@
                 android:id="@+id/mylayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/black_border"
+                android:background="@drawable/custumze_border"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
@@ -25,25 +26,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <View
                         android:id="@+id/myrecyprofile"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/mycirlceimage"
-                        android:src="@drawable/profilepicture" />
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/myshape"
+                        android:backgroundTint="@color/anujlightgrey" />
+
+                    <TextView
+                        android:id="@+id/userfirst"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/myrecyprofile"
+                        android:layout_alignTop="@id/myrecyprofile"
+                        android:layout_alignRight="@id/myrecyprofile"
+                        android:layout_alignBottom="@id/myrecyprofile"
+                        android:gravity="center"
+                        android:text="S"
+                        android:textAlignment="center"
+                        android:textColor="@color/anujcherryred"
+                        android:textSize="35sp"
+                        android:textStyle="normal" />
+
                     <TextView
                         android:id="@+id/myrecyphone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_toLeftOf="@id/recyArrow"
                         android:layout_toRightOf="@id/myrecyprofile"
                         android:maxWidth="100dp"
                         android:text="dkgdklgjdgjkdgjldgsjklgjskldgkjldgjlsdjglskd"
                         android:textSize="25sp"
                         android:textStyle="bold" />
+
                     <ImageView
                         android:id="@+id/recyArrow"
                         android:layout_width="30dp"
@@ -51,7 +69,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        android:background="@color/white"
                         android:src="@drawable/layoutback" />
                 </RelativeLayout>
             </LinearLayout>

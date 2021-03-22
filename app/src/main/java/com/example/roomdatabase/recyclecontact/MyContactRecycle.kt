@@ -20,7 +20,7 @@ class MyContactRecycle(private  val function: (MyContact) -> Unit) : RecyclerVie
 
     override fun onBindViewHolder(holder: MyContactHolder, position: Int) {
         var currObj=myAllMyContact[position]
-        holder.binding(currObj,function)
+        holder.binding(currObj,MainActivity.randomNumber(MainActivity.myColor.size -1),function)
     }
 
     override fun getItemCount(): Int {
