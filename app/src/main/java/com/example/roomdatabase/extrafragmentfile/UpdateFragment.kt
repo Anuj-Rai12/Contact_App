@@ -54,7 +54,8 @@ class UpdateFragment : Fragment() {
                         .navigate(R.id.action_upadeFragment_to_favFragment)
                 }
                 else->{
-                    Toast.makeText(activity, myViewModel.actionOp, Toast.LENGTH_SHORT).show()
+                    it.findNavController()
+                        .navigate(R.id.action_upadeFragment_to_callFragment)
                 }
             }
         }

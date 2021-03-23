@@ -154,7 +154,6 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         if (updateOrDelete) {
             if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
                 _snackbarmsg.value = Event("Profile is Not Updated")
-              //  initial()
                 return
             }
             update(
@@ -169,6 +168,22 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
             )
             _snackbarmsg.value = Event("Profile is Updated Successfully")
             //initial()
+        }
+    }
+
+    fun addDetailCall(s: String) {
+        if (s.isDigitsOnly()&& s.isNotEmpty()&&s.isNotBlank()
+        ) {
+            insert(
+                MyContact(
+                    0,
+                    "0",
+                    "UnKnown",
+                    "UnKnown",
+                    s,
+                    bitmap!!
+                )
+            )
         }
     }
 }

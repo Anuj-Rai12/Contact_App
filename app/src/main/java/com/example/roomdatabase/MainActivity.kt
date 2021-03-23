@@ -1,13 +1,18 @@
 package com.example.roomdatabase
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.ActionBar
+import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -22,8 +27,9 @@ import coil.request.SuccessResult
 import com.example.roomdatabase.databinding.ActivityMainBinding
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import java.security.AccessController.getContext
 import kotlin.math.floor
+
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -48,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //getSupportActionBar()?.hide()

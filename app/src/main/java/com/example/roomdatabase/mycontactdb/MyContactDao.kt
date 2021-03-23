@@ -17,7 +17,7 @@ interface MyContactDao {
     @Query("delete From My_Contact_Detail")
     suspend fun deleteAllContact()
 
-    @Query("Select *From My_Contact_Detail")
+    @Query("Select *From My_Contact_Detail  where FirstName != \"UnKnown\" and LastName !=\"UnKnown\"")
     fun displayAllData(): LiveData<List<MyContact>>
 
     @Query("Select *From My_Contact_Detail where FirstName Like:searchQuery or LastName Like:searchQuery or PhoneNumber Like :searchQuery")

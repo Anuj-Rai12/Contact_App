@@ -12,9 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.roomdatabase.MainActivity
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentDailerBinding
+import com.example.roomdatabase.myviewmodle.MyViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
@@ -22,6 +25,7 @@ import kotlinx.coroutines.launch
 
 class DialerFragment : Fragment() {
     private lateinit var binding: FragmentDailerBinding
+    private lateinit var myViewModel: MyViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,10 +35,21 @@ class DialerFragment : Fragment() {
             statusBar()
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dailer, container, false)
-         val blink = AnimationUtils.loadAnimation(activity, R.anim.blink_animation)
+        myViewModelFun()
+        val blink = AnimationUtils.loadAnimation(activity, R.anim.blink_animation)
         binding.mycallbutton.startAnimation(blink)
-        binding.mycallbutton.setOnClickListener {calls()}
+        binding.mycallbutton.setOnClickListener {
+            calls()
+            myViewModel.bitmap=MainActivity.getmybitmap
+            val str=binding.myphoneno.text.toString()
+            myViewModel.addDetailCall(str)
+        }
         return binding.root
+    }
+    private fun myViewModelFun() {
+        myViewModel =
+            ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
+        binding.lifecycleOwner = this
     }
     private suspend fun statusBar()
     {

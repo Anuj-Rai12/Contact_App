@@ -69,6 +69,10 @@ class DisplayContactFragment : Fragment() {
                     it.findNavController()
                         .navigate(R.id.action_displayContactFragment_to_favFragment)
                 }
+                else->{
+                    it.findNavController()
+                        .navigate(R.id.action_upadeFragment_to_callFragment)
+                }
             }
         }
         return binding.root

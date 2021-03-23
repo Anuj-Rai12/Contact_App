@@ -54,7 +54,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="2dp"
+                        android:textAlignment="center"
+                        android:gravity="center"
                         android:layout_toLeftOf="@id/recyArrow"
                         android:layout_toRightOf="@id/myrecyprofile"
                         android:maxWidth="100dp"
@@ -64,8 +66,8 @@
 
                     <ImageView
                         android:id="@+id/recyArrow"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
