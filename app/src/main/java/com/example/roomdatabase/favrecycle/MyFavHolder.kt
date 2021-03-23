@@ -15,7 +15,8 @@ class MyFavHolder(val binding: FavLayoutBinding) : RecyclerView.ViewHolder(bindi
             )
         )
         binding.myfavtext.text =
-            myContact.firstName[0].toUpperCase().toString() + myContact.lastName[0].toLowerCase().toString()
+            myContact.firstName[0].toUpperCase().toString() + myContact.lastName[0].toLowerCase()
+                .toString()
         binding.mycolorlayout.setOnClickListener {
             function(myContact)
         }

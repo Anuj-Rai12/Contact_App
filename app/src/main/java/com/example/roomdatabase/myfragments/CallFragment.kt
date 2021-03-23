@@ -13,8 +13,11 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomdatabase.R
+import com.example.roomdatabase.callrecycle.MyCallRecycle
 import com.example.roomdatabase.databinding.FragmentCallBinding
+import com.example.roomdatabase.mycontactdb.MyContact
 import com.example.roomdatabase.myviewmodle.MyViewModel
 import com.example.roomdatabase.utils.startAnimation
 
@@ -22,6 +25,7 @@ import com.example.roomdatabase.utils.startAnimation
 class CallFragment : Fragment() {
     private lateinit var binding: FragmentCallBinding
     private lateinit var myViewModel: MyViewModel
+    private lateinit var myCallRecycle: MyCallRecycle
     private lateinit var animation: Animation
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +33,7 @@ class CallFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_call, container, false)
         myViewModelFun()
+        myCallRecycleFun()
         myViewModel.actionOp="CallFragment"
         animation = AnimationUtils.loadAnimation(activity, R.anim.green_expolsion).apply {
             duration = 700
@@ -49,6 +54,13 @@ class CallFragment : Fragment() {
             }
         }
     }
+    private fun myCallRecycleFun()
+    {
+        binding.recyclerView.layoutManager=LinearLayoutManager(activity)
+        myCallRecycle= MyCallRecycle{selection:MyContact->itemSelected(selection)}
+        binding.recyclerView.adapter=myCallRecycle
+        getResult()
+    }
     private fun myViewModelFun() {
         myViewModel =
             ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
@@ -56,4 +68,17 @@ class CallFragment : Fragment() {
     }
     private fun callDialer() =
         view?.findNavController()?.navigate(R.id.action_callFragment_to_dailerFragment)
+    private fun callDisplay() =
+        view?.findNavController()?.navigate(R.id.action_callFragment_to_displayContactFragment)
+    private fun getResult() {
+        myViewModel.allTheCall.observe(viewLifecycleOwner, {
+            myCallRecycle.setCallData(it)
+            myCallRecycle.notifyDataSetChanged()
+        })
+    }
+    fun itemSelected(myContact: MyContact)
+    {
+        myViewModel.updateOrDelete(myContact)
+        callDisplay()
+    }
 }

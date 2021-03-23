@@ -8,6 +8,7 @@
         android:layout_margin="10dp">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/mycardview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="15dp"
@@ -55,12 +56,12 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="2dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
                         android:layout_toLeftOf="@id/recyArrow"
                         android:layout_toRightOf="@id/myrecyprofile"
+                        android:gravity="center"
                         android:maxWidth="100dp"
                         android:text="dkgdklgjdgjkdgjldgsjklgjskldgkjldgjlsdjglskd"
+                        android:textAlignment="center"
                         android:textSize="25sp"
                         android:textStyle="bold" />
 

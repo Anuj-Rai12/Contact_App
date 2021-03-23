@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.view.View
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.*
+import com.example.roomdatabase.MainActivity
 import com.example.roomdatabase.mycontactdb.MyContact
 import com.example.roomdatabase.mycontactdb.MyContactBolier
 import com.example.roomdatabase.repos.MyContactRepo
@@ -16,26 +17,28 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     //Activity/Fragment Checker
     var actionOp: String? = null
-
+    var checdes: Boolean? = null
     //Repository linking boz of to avoiding many instances
     private val repo: MyContactRepo
     val allTheData: LiveData<List<MyContact>>
+    val allTheCall: LiveData<List<MyContact>>
 
     init {
         val dao = MyContactBolier.getInstance(application).dataAccessObj
         repo = MyContactRepo(dao)
         allTheData = repo.dao
+        allTheCall = repo.callHistory
     }
 
     //UpdateOrDelete bool
     private var updateOrDelete: Boolean = false
     private lateinit var myContact: MyContact
+    private var updateCalls: Boolean = false
 
     //Messages
     private var _snackbarmsg = MutableLiveData<Event<String>>()
     val snackbarmsg: LiveData<Event<String>>
         get() = _snackbarmsg
-
 
     val inputLastName = MutableLiveData<String?>()
 
@@ -50,24 +53,28 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun setData(view: View) {
-            if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
-                _snackbarmsg.value = Event("Profile is not Created")
-                initial()
-                return
-            }
-            insert(
-                MyContact(
-                    0,
-                    "0",
-                    inputFirstName.value!!,
-                    inputLastName.value!!,
-                    phoneNo.value!!,
-                    bitmap!!
-                )
-            )
-            _snackbarmsg.value = Event("Profile is Created Successfully")
+        if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly()) {
+            _snackbarmsg.value =
+                Event("Enter a valid Input\nCheck your Internet")
             initial()
+            return
         }
+        if (bitmap == null)
+            bitmap = MainActivity.getmybitmap
+        insert(
+            MyContact(
+                0,
+                "0",
+                inputFirstName.value!!,
+                inputLastName.value!!,
+                phoneNo.value!!,
+                0,
+                bitmap!!
+            )
+        )
+        _snackbarmsg.value = Event("Profile is Created Successfully")
+        initial()
+    }
 
 
     fun deleteAllData() {
@@ -96,6 +103,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         phoneNo.value = myContact.phoneNumber
         bitmap = myContact.profilePicture
         updateOrDelete = true
+        updateCalls = true
         this.myContact = myContact
     }
 
@@ -107,10 +115,6 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         favOrUpdate("0")
         myContact.favor = "0"
         _snackbarmsg.value = Event("Favorite profile is Removed")
-    }
-
-    fun edit(view: View) {
-        _snackbarmsg.value = Event("You have click Edit")
     }
 
     private fun insert(myContact: MyContact): Job = viewModelScope.launch {
@@ -137,6 +141,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
                 myContact.firstName,
                 myContact.lastName,
                 myContact.phoneNumber,
+                myContact.phonecall,
                 myContact.profilePicture
             )
         )
@@ -148,6 +153,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         phoneNo.value = null
         bitmap = null
         updateOrDelete = false
+        updateCalls = true
     }
 
     fun updateData() {
@@ -163,6 +169,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
                     inputFirstName.value!!,
                     inputLastName.value!!,
                     phoneNo.value!!,
+                    myContact.phonecall,
                     bitmap!!
                 )
             )
@@ -171,19 +178,19 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun addDetailCall(s: String) {
-        if (s.isDigitsOnly()&& s.isNotEmpty()&&s.isNotBlank()
-        ) {
-            insert(
-                MyContact(
-                    0,
-                    "0",
-                    "UnKnown",
-                    "UnKnown",
-                    s,
-                    bitmap!!
-                )
+    fun updateCallRecord() {
+        val ca = myContact.phonecall + 1
+        update(
+            MyContact(
+                myContact.id,
+                myContact.favor,
+                inputFirstName.value!!,
+                inputLastName.value!!,
+                phoneNo.value!!,
+                ca,
+                bitmap!!
             )
-        }
+        )
+        _snackbarmsg.value = Event("Calls Are Updated ")
     }
 }

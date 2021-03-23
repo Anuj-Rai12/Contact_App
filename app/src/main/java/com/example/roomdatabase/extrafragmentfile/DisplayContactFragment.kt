@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.view.animation.AnimationUtils
@@ -69,7 +68,7 @@ class DisplayContactFragment : Fragment() {
                     it.findNavController()
                         .navigate(R.id.action_displayContactFragment_to_favFragment)
                 }
-                else->{
+                else -> {
                     it.findNavController()
                         .navigate(R.id.action_upadeFragment_to_callFragment)
                 }
@@ -94,6 +93,7 @@ class DisplayContactFragment : Fragment() {
         if (checkCallPermission()) {
             val dial = "tel:${binding.myphoneno.text}"
             startActivity(Intent(Intent.ACTION_CALL, Uri.parse(dial)))
+            myViewModel.updateCallRecord()
         } else
             activity?.let {
                 ActivityCompat.requestPermissions(

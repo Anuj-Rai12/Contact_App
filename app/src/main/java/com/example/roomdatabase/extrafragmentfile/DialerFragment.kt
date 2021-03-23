@@ -5,7 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,9 +16,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.roomdatabase.MainActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentDailerBinding
+import com.example.roomdatabase.dialerecycle.SrcDailerRecycler
+import com.example.roomdatabase.mycontactdb.MyContact
 import com.example.roomdatabase.myviewmodle.MyViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
@@ -25,7 +29,9 @@ import kotlinx.coroutines.launch
 
 class DialerFragment : Fragment() {
     private lateinit var binding: FragmentDailerBinding
+    private lateinit var srcDailerRecycler: SrcDailerRecycler
     private lateinit var myViewModel: MyViewModel
+    private var checkIt:Boolean=false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,39 +42,52 @@ class DialerFragment : Fragment() {
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dailer, container, false)
         myViewModelFun()
+        SrcDailerRecyclerFun()
         val blink = AnimationUtils.loadAnimation(activity, R.anim.blink_animation)
         binding.mycallbutton.startAnimation(blink)
         binding.mycallbutton.setOnClickListener {
+
             calls()
-            myViewModel.bitmap=MainActivity.getmybitmap
-            val str=binding.myphoneno.text.toString()
-            myViewModel.addDetailCall(str)
         }
         return binding.root
+    }
+private fun SrcDailerRecyclerFun()
+{
+    binding.recyclerView.layoutManager=LinearLayoutManager(activity)
+    srcDailerRecycler= SrcDailerRecycler{selection:MyContact->itemSelection(selection)}
+    binding.recyclerView.adapter=srcDailerRecycler
+}
+
+    private fun goToDisplay()=view?.findNavController()?.navigate(R.id.action_dailerFragment_to_displayContactFragment)
+    private fun itemSelection(myContact: MyContact)
+    {
+        myViewModel.updateOrDelete(myContact)
+        goToDisplay()
     }
     private fun myViewModelFun() {
         myViewModel =
             ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
         binding.lifecycleOwner = this
     }
-    private suspend fun statusBar()
-    {
+
+    private suspend fun statusBar() {
         delay(150)
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
-    private fun calls()
-    {
-        if(checkCallPermission())
-        {
-            val intent=Intent(Intent.ACTION_CALL)
-            intent.setData(Uri.parse("tel:+${binding.codepicker!!.selectedCountryCode+binding.myphoneno.text}"))
-            startActivity(intent)
-        }
-        else
-            Toast.makeText(activity, "Call permission not given", Toast.LENGTH_SHORT).show()
-    }
-    private fun gotCallHistory()=view?.findNavController()?.navigate(R.id.action_dailerFragment_to_callFragment)
 
+    private fun calls() {
+        val myPhone = binding.myphoneno.text
+        getResult(binding.myphoneno.text.toString())
+        if (myPhone != null && checkIt) {
+            if (checkCallPermission() && myPhone.isNotEmpty() && myPhone.length >= 2) {
+                val intent = Intent(Intent.ACTION_CALL)
+                intent.data =
+                    Uri.parse("tel:+${binding.codepicker.selectedCountryCode + myPhone}")
+                startActivity(intent)
+            } else
+                Toast.makeText(activity, "Call not allowed", Toast.LENGTH_SHORT).show()
+        }
+    }
     private fun checkCallPermission() = (context?.let {
         ActivityCompat.checkSelfPermission(
             it,
@@ -76,4 +95,12 @@ class DialerFragment : Fragment() {
         )
     } == PackageManager.PERMISSION_GRANTED)
 
+    private fun getResult(string: String) {
+        val searchQuery = "%$string%"
+        myViewModel.searchMyRes(searchQuery).observe(viewLifecycleOwner, {
+            srcDailerRecycler.setData(it)
+            checkIt = it.isNotEmpty()
+            srcDailerRecycler.notifyDataSetChanged()
+        })
+    }
 }

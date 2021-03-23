@@ -33,14 +33,14 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         myViewModelFun()
         myRecycleViewFun()
-        myViewModel.actionOp="ContactFragment"
+        myViewModel.actionOp = "ContactFragment"
         binding.addContact.setOnClickListener { gotoCreateContact() }
         return binding.root
     }
 
     private fun myRecycleViewFun() {
         binding.displayRecyclerView.layoutManager = LinearLayoutManager(activity)
-        myContactRecycle = MyContactRecycle{selected:MyContact -> itemSelected(selected)}
+        myContactRecycle = MyContactRecycle { selected: MyContact -> itemSelected(selected) }
         binding.displayRecyclerView.adapter = myContactRecycle
         myViewModel.allTheData.observe(viewLifecycleOwner, {
             myContactRecycle.setAllTheData(it)

@@ -68,6 +68,13 @@
             app:exitAnim="@anim/pop_exit_anim"
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim" />
+        <action
+            android:id="@+id/action_dailerFragment_to_displayContactFragment"
+            app:destination="@id/displayContactFragment"
+            app:enterAnim="@anim/ente_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/createContactFragment"

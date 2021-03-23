@@ -23,7 +23,8 @@ data class MyContact(
 
     @ColumnInfo(name = "PhoneNumber")
     var phoneNumber: String,
-
+    @ColumnInfo(name = "CallHistory")
+    var phonecall: Int,
     @ColumnInfo(name = "ProfilePicture")
     var profilePicture: Bitmap
 )

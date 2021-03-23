@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
@@ -37,7 +38,10 @@ class CreateContactFragment : Fragment() {
             it.getContentIfNotHandled()
                 ?.let { Toast.makeText(activity, it, Toast.LENGTH_SHORT).show() }
         })
-        if (myViewModel.bitmap == null) myViewModel.bitmap =getmybitmap
+        if (myViewModel.bitmap == null) {
+            myViewModel.bitmap =getmybitmap
+            binding.myprofile.setImageBitmap(myViewModel.bitmap)
+        }
         return binding.root
     }
 
