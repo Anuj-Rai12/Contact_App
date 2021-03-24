@@ -191,6 +191,5 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
                 bitmap!!
             )
         )
-        _snackbarmsg.value = Event("Calls Are Updated ")
     }
 }

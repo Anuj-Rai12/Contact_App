@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,15 +79,28 @@ private fun SrcDailerRecyclerFun()
     private fun calls() {
         val myPhone = binding.myphoneno.text
         getResult(binding.myphoneno.text.toString())
-        if (myPhone != null && checkIt) {
-            if (checkCallPermission() && myPhone.isNotEmpty() && myPhone.length >= 2) {
-                val intent = Intent(Intent.ACTION_CALL)
-                intent.data =
-                    Uri.parse("tel:+${binding.codepicker.selectedCountryCode + myPhone}")
-                startActivity(intent)
-            } else
-                Toast.makeText(activity, "Call not allowed", Toast.LENGTH_SHORT).show()
+        if (myPhone != null) {
+            if(checkIt) {
+             //   Toast.makeText(activity, "true option", Toast.LENGTH_SHORT).show()
+                checkIt=false
+                callCheck(myPhone)
+            }
+            else{
+                //Toast.makeText(activity, "false option", Toast.LENGTH_SHORT).show()
+                checkIt=false
+                return
+            }
         }
+    }
+    private fun callCheck(myPhone: Editable)
+    {
+        if (checkCallPermission() && myPhone.isNotEmpty() && myPhone.length >= 2) {
+            val intent = Intent(Intent.ACTION_CALL)
+            intent.data =
+                Uri.parse("tel:+${binding.codepicker.selectedCountryCode + myPhone}")
+            startActivity(intent)
+        } else
+            Toast.makeText(activity, "Call not allowed", Toast.LENGTH_SHORT).show()
     }
     private fun checkCallPermission() = (context?.let {
         ActivityCompat.checkSelfPermission(

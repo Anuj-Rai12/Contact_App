@@ -6,12 +6,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.roomdatabase.myfragments.CallFragment"
-        android:background="@color/anujlightgrey">
+        tools:context="com.example.roomdatabase.myfragments.CallFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/anujlightgrey">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

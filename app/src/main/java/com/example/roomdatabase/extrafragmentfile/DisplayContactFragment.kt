@@ -91,9 +91,9 @@ class DisplayContactFragment : Fragment() {
 
     private fun calls() {
         if (checkCallPermission()) {
+            myViewModel.updateCallRecord()
             val dial = "tel:${binding.myphoneno.text}"
             startActivity(Intent(Intent.ACTION_CALL, Uri.parse(dial)))
-            myViewModel.updateCallRecord()
         } else
             activity?.let {
                 ActivityCompat.requestPermissions(

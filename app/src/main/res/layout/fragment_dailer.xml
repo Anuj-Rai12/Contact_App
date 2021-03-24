@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:hint="Phone Number"
-                        android:textColorHint="@color/anujlightgrey"
+                        android:textColorHint="@color/black"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeWidthFocused="2dp"
                         app:endIconMode="clear_text"
