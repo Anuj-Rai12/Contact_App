@@ -3,6 +3,8 @@ package com.example.roomdatabase.extrafragmentfile
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -32,39 +34,48 @@ class DialerFragment : Fragment() {
     private lateinit var binding: FragmentDailerBinding
     private lateinit var srcDailerRecycler: SrcDailerRecycler
     private lateinit var myViewModel: MyViewModel
-    private var checkIt:Boolean=false
+    private var checkIt: Boolean = false
+    private var count: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (mode == Configuration.UI_MODE_NIGHT_YES) {
+            (activity as AppCompatActivity?)!!.supportActionBar!!.setBackgroundDrawable(
+                ColorDrawable(resources.getColor(R.color.anujgreen))
+            )
+        }
         CoroutineScope(Main).launch {
             statusBar()
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dailer, container, false)
         myViewModelFun()
-        SrcDailerRecyclerFun()
+        srcDialerRecyclerFun()
         val blink = AnimationUtils.loadAnimation(activity, R.anim.blink_animation)
         binding.mycallbutton.startAnimation(blink)
         binding.mycallbutton.setOnClickListener {
-
+            count++
             calls()
         }
         return binding.root
     }
-private fun SrcDailerRecyclerFun()
-{
-    binding.recyclerView.layoutManager=LinearLayoutManager(activity)
-    srcDailerRecycler= SrcDailerRecycler{selection:MyContact->itemSelection(selection)}
-    binding.recyclerView.adapter=srcDailerRecycler
-}
 
-    private fun goToDisplay()=view?.findNavController()?.navigate(R.id.action_dailerFragment_to_displayContactFragment)
-    private fun itemSelection(myContact: MyContact)
-    {
+    private fun srcDialerRecyclerFun() {
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        srcDailerRecycler = SrcDailerRecycler { selection: MyContact -> itemSelection(selection) }
+        binding.recyclerView.adapter = srcDailerRecycler
+    }
+
+    private fun goToDisplay() =
+        view?.findNavController()?.navigate(R.id.action_dailerFragment_to_displayContactFragment)
+
+    private fun itemSelection(myContact: MyContact) {
         myViewModel.updateOrDelete(myContact)
         goToDisplay()
     }
+
     private fun myViewModelFun() {
         myViewModel =
             ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
@@ -80,20 +91,21 @@ private fun SrcDailerRecyclerFun()
         val myPhone = binding.myphoneno.text
         getResult(binding.myphoneno.text.toString())
         if (myPhone != null) {
-            if(checkIt) {
-             //   Toast.makeText(activity, "true option", Toast.LENGTH_SHORT).show()
-                checkIt=false
-                callCheck(myPhone)
-            }
-            else{
-                //Toast.makeText(activity, "false option", Toast.LENGTH_SHORT).show()
-                checkIt=false
+            if (checkIt||checkIt&&count>=2) {
+                checkIt = false
+                if (count>=2) {
+                    callCheck(myPhone)
+                    count = 0
+                }
+            } else {
+                checkIt = false
+                    callCheck(myPhone)
                 return
             }
         }
     }
-    private fun callCheck(myPhone: Editable)
-    {
+
+    private fun callCheck(myPhone: Editable) {
         if (checkCallPermission() && myPhone.isNotEmpty() && myPhone.length >= 2) {
             val intent = Intent(Intent.ACTION_CALL)
             intent.data =
@@ -102,6 +114,7 @@ private fun SrcDailerRecyclerFun()
         } else
             Toast.makeText(activity, "Call not allowed", Toast.LENGTH_SHORT).show()
     }
+
     private fun checkCallPermission() = (context?.let {
         ActivityCompat.checkSelfPermission(
             it,
@@ -109,11 +122,23 @@ private fun SrcDailerRecyclerFun()
         )
     } == PackageManager.PERMISSION_GRANTED)
 
+    private fun checkResult(string: String, myContact: MyContact): Boolean = try {
+        string == myContact.phoneNumber
+    } catch (e: NoSuchElementException) {
+        Toast.makeText(activity, "Hit, No Such Function Exits", Toast.LENGTH_SHORT).show()
+        false
+    }
+
     private fun getResult(string: String) {
         val searchQuery = "%$string%"
         myViewModel.searchMyRes(searchQuery).observe(viewLifecycleOwner, {
             srcDailerRecycler.setData(it)
-            checkIt = it.isNotEmpty()
+            /*checkIt = if (it.isNotEmpty())
+                checkResult(string, it.first())
+            else
+                false*/
+            val srcData=it?.listIterator()
+            checkIt = srcData!=null
             srcDailerRecycler.notifyDataSetChanged()
         })
     }

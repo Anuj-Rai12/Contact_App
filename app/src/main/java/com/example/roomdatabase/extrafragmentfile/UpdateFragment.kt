@@ -1,13 +1,16 @@
 package com.example.roomdatabase.extrafragmentfile
 
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -31,6 +34,12 @@ class UpdateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (mode == Configuration.UI_MODE_NIGHT_YES) {
+            (activity as AppCompatActivity?)!!.supportActionBar!!.setBackgroundDrawable(
+                ColorDrawable(resources.getColor(R.color.anujgreen))
+            )
+        }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_upade, container, false)
         myViewModel = ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
         binding.myvariable = myViewModel

@@ -1,5 +1,7 @@
 package com.example.roomdatabase.myfragments
 
+import android.content.res.Configuration
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -30,6 +32,12 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
         savedInstanceState: Bundle?
     ): View {
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (mode == Configuration.UI_MODE_NIGHT_YES) {
+            (activity as AppCompatActivity?)!!.supportActionBar!!.setBackgroundDrawable(
+                ColorDrawable(resources.getColor(R.color.anujgreen))
+            )
+        }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         myViewModelFun()
         myRecycleViewFun()
