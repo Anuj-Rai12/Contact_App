@@ -62,7 +62,11 @@ class DialerFragment : Fragment() {
         return binding.root
     }
 
+<<<<<<< HEAD
     private fun srcDialerRecyclerFun() {
+=======
+    private fun SrcDailerRecyclerFun() {
+>>>>>>> 1a56e29aeacdc1610d888555289e69286b560a45
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         srcDailerRecycler = SrcDailerRecycler { selection: MyContact -> itemSelection(selection) }
         binding.recyclerView.adapter = srcDailerRecycler
@@ -91,6 +95,7 @@ class DialerFragment : Fragment() {
         val myPhone = binding.myphoneno.text
         getResult(binding.myphoneno.text.toString())
         if (myPhone != null) {
+<<<<<<< HEAD
             if (checkIt||checkIt&&count>=2) {
                 checkIt = false
                 if (count>=2) {
@@ -100,6 +105,21 @@ class DialerFragment : Fragment() {
             } else {
                 checkIt = false
                     callCheck(myPhone)
+=======
+            if (!checkIt) {
+                //Toast.makeText(activity, "unknown false", Toast.LENGTH_SHORT).show()
+                checkIt = false
+                callCheck(myPhone)
+                count=0
+            } else {
+                //Toast.makeText(activity, "number found true", Toast.LENGTH_SHORT).show()
+                checkIt = false
+                if (count > 1) {
+                  //  Toast.makeText(activity, "$count is ", Toast.LENGTH_SHORT).show()
+                    callCheck(myPhone)
+                    count=0
+                }
+>>>>>>> 1a56e29aeacdc1610d888555289e69286b560a45
                 return
             }
         }
@@ -133,8 +153,15 @@ class DialerFragment : Fragment() {
         val searchQuery = "%$string%"
         myViewModel.searchMyRes(searchQuery).observe(viewLifecycleOwner, {
             srcDailerRecycler.setData(it)
+<<<<<<< HEAD
             val srcData=it?.listIterator()
             checkIt = srcData!=null
+=======
+            checkIt = if (it.isNotEmpty())
+                checkResult(string, it.first())
+            else
+                false
+>>>>>>> 1a56e29aeacdc1610d888555289e69286b560a45
             srcDailerRecycler.notifyDataSetChanged()
         })
     }
