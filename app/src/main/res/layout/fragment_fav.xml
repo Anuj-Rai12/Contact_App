@@ -20,5 +20,11 @@
                 android:background="@color/anujlightgrey" />
 
         </RelativeLayout>
+        <ImageView
+            android:id="@+id/favbg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            />
     </FrameLayout>
 </layout>

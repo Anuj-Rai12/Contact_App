@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 
 class DialerFragment : Fragment() {
     private lateinit var binding: FragmentDailerBinding
-    private lateinit var srcDailerRecycler: SrcDailerRecycler
+    private lateinit var srcDialerRecycler: SrcDailerRecycler
     private lateinit var myViewModel: MyViewModel
     private var checkIt: Boolean = false
     private var count: Int = 0
@@ -64,9 +64,9 @@ class DialerFragment : Fragment() {
 
     private fun srcDialerRecyclerFun() {
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
-        srcDailerRecycler =
+        srcDialerRecycler =
             SrcDailerRecycler { selection: MyContact -> itemSelection(selection) }
-        binding.recyclerView.adapter = srcDailerRecycler
+        binding.recyclerView.adapter = srcDialerRecycler
     }
 
     private fun goToDisplay() =
@@ -124,20 +124,22 @@ class DialerFragment : Fragment() {
         )
     } == PackageManager.PERMISSION_GRANTED)
 
+/*
     private fun checkResult(string: String, myContact: MyContact): Boolean = try {
         string == myContact.phoneNumber
     } catch (e: NoSuchElementException) {
         Toast.makeText(activity, "Hit, No Such Function Exits", Toast.LENGTH_SHORT).show()
         false
     }
+*/
 
     private fun getResult(string: String) {
         val searchQuery = "%$string%"
         myViewModel.searchMyRes(searchQuery).observe(viewLifecycleOwner, {
-            srcDailerRecycler.setData(it)
+            srcDialerRecycler.setData(it)
             val srcData = it?.listIterator()
             checkIt = srcData != null
-            srcDailerRecycler.notifyDataSetChanged()
+            srcDialerRecycler.notifyDataSetChanged()
         })
     }
 }

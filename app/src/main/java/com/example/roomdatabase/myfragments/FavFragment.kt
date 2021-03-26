@@ -58,6 +58,14 @@ class FavFragment : Fragment() {
         val searchQuery = "%$string%"
         myViewModel.searchMyFav(searchQuery).observe(viewLifecycleOwner, {
             myFavRecycle.setMyData(it)
+            if(it.isEmpty())
+            {
+                binding.favbg.visibility=View.VISIBLE
+                binding.favbg.setImageDrawable(resources.getDrawable(R.drawable.ic_avorite))
+            }
+            else{
+                binding.favbg.visibility=View.GONE
+            }
             myFavRecycle.notifyDataSetChanged()
         })
     }

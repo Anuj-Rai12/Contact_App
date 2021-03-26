@@ -42,7 +42,7 @@ class CallFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_call, container, false)
         myViewModelFun()
         myCallRecycleFun()
-        myViewModel.actionOp="CallFragment"
+        myViewModel.actionOp = "CallFragment"
         animation = AnimationUtils.loadAnimation(activity, R.anim.green_expolsion).apply {
             duration = 700
             interpolator = AccelerateDecelerateInterpolator()
@@ -50,6 +50,7 @@ class CallFragment : Fragment() {
         gotoDialer()
         return binding.root
     }
+
     private fun gotoDialer() {
         binding.apply {
             mydialer.setOnClickListener {
@@ -62,30 +63,40 @@ class CallFragment : Fragment() {
             }
         }
     }
-    private fun myCallRecycleFun()
-    {
-        binding.recyclerView.layoutManager=LinearLayoutManager(activity)
-        myCallRecycle= MyCallRecycle{selection:MyContact->itemSelected(selection)}
-        binding.recyclerView.adapter=myCallRecycle
+
+    private fun myCallRecycleFun() {
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        myCallRecycle = MyCallRecycle { selection: MyContact -> itemSelected(selection) }
+        binding.recyclerView.adapter = myCallRecycle
         getResult()
     }
+
     private fun myViewModelFun() {
         myViewModel =
             ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
         binding.lifecycleOwner = this
     }
+
     private fun callDialer() =
         view?.findNavController()?.navigate(R.id.action_callFragment_to_dailerFragment)
+
     private fun callDisplay() =
         view?.findNavController()?.navigate(R.id.action_callFragment_to_displayContactFragment)
+
     private fun getResult() {
         myViewModel.allTheCall.observe(viewLifecycleOwner, {
             myCallRecycle.setCallData(it)
+            if (it.isEmpty()) {
+                binding.callbg.visibility = View.VISIBLE
+                binding.callbg.setImageDrawable(resources.getDrawable(R.drawable.ic_call))
+            } else {
+                binding.callbg.visibility = View.GONE
+            }
             myCallRecycle.notifyDataSetChanged()
         })
     }
-    fun itemSelected(myContact: MyContact)
-    {
+
+    fun itemSelected(myContact: MyContact) {
         myViewModel.updateOrDelete(myContact)
         callDisplay()
     }

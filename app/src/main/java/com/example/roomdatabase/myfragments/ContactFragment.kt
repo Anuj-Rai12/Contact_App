@@ -1,7 +1,9 @@
 package com.example.roomdatabase.myfragments
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -46,12 +48,19 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
         return binding.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun myRecycleViewFun() {
         binding.displayRecyclerView.layoutManager = LinearLayoutManager(activity)
         myContactRecycle = MyContactRecycle { selected: MyContact -> itemSelected(selected) }
         binding.displayRecyclerView.adapter = myContactRecycle
         myViewModel.allTheData.observe(viewLifecycleOwner, {
             myContactRecycle.setAllTheData(it)
+            if (it.isEmpty()) {
+                binding.myimage.visibility = View.VISIBLE
+                binding.myimage.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_contacts_24))
+            } else {
+                binding.myimage.visibility=View.GONE
+            }
             myContactRecycle.notifyDataSetChanged()
         })
     }
