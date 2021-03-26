@@ -7,59 +7,50 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.example.roomdatabase.databinding.ActivityUserenterfaceBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class userenterface : AppCompatActivity() {
-
+private lateinit var binding: ActivityUserenterfaceBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_userenterface)
+        binding=DataBindingUtil.setContentView(this,R.layout.activity_userenterface)
         (this as AppCompatActivity?)!!.supportActionBar!!.hide()
-        /*window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        actionBar?.hide()*/
         window.decorView.apply {
-
             systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
         }
         //Fullscreen mode;
         onWindowFocusChanged(true)
         //animation field
-        val Topanimation = AnimationUtils.loadAnimation(this, R.anim.top_animation)
-        val botanimatio=AnimationUtils.loadAnimation(this,R.anim.bot_animation)
+        val topAnimation = AnimationUtils.loadAnimation(this, R.anim.top_animation)
+        val botAnimation=AnimationUtils.loadAnimation(this,R.anim.bot_animation)
         val mid=AnimationUtils.loadAnimation(this,R.anim.meddle_animation)
-        //id
-//lines
-        val white=findViewById<View>(R.id.wt)
-        val blue1=findViewById<View>(R.id.blue)
-        val red1=findViewById<View>(R.id.red)
-        val des=findViewById<View>(R.id.des)
-        var blue2=findViewById<View>(R.id.blue2)
-        val red2=findViewById<View>(R.id.red2)
-//txt
-        val txt1=findViewById<TextView>(R.id.txt1)
-        val txt2=findViewById<TextView>(R.id.txt2)
-        val txt3=findViewById<TextView>(R.id.txt3)
-//Last Line
-        val txt4=findViewById<TextView>(R.id.txt4)
-        //hooking top
-        white.startAnimation(Topanimation)
-        blue1.startAnimation(Topanimation)
-        red1.startAnimation(Topanimation)
-        des.startAnimation(Topanimation)
-        blue2.startAnimation(Topanimation)
-        red2.startAnimation(Topanimation)
-        //hooking mid
-        txt1.startAnimation(mid)
-        txt2.startAnimation(mid)
-        txt3.startAnimation(mid)
-        //hooking bottom
-        txt4.startAnimation(botanimatio)
 
-        //splash screen end
-        Handler().postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }, 5000)
+        binding.wt.startAnimation(topAnimation)
+        binding.blue.startAnimation(topAnimation)
+        binding.red.startAnimation(topAnimation)
+        binding.des.startAnimation(topAnimation)
+        binding.blue2.startAnimation(topAnimation)
+        binding.red2.startAnimation(topAnimation)
+        //hooking mid
+        binding.txt1.startAnimation(mid)
+        binding.txt2.startAnimation(mid)
+        binding.txt3.startAnimation(mid)
+        //hooking bottom
+        binding.txt4.startAnimation(botAnimation)
+        CoroutineScope(Main).launch {
+            delay(10000)
+            changed()
+        }
+    }
+    private fun changed()
+    {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
