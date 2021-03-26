@@ -133,10 +133,6 @@ class DialerFragment : Fragment() {
         val searchQuery = "%$string%"
         myViewModel.searchMyRes(searchQuery).observe(viewLifecycleOwner, {
             srcDailerRecycler.setData(it)
-            /*checkIt = if (it.isNotEmpty())
-                checkResult(string, it.first())
-            else
-                false*/
             val srcData=it?.listIterator()
             checkIt = srcData!=null
             srcDailerRecycler.notifyDataSetChanged()
