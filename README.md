@@ -28,7 +28,7 @@ The App is Design In Kotlin And Follwed Mvvm Architecture,
 - Option to Search User Contact in List of User.
 - Dailer is Also there in which User can Dailer Unkown Number
 
-This is My First Major App is have implement all the knowledge which is learn
+This is My First Major App and i have implement all the knowledge which is learn
 If you Want then you can Download Apk and Try it.
 And if you feel it need some improvement the you can highlight it 
 Or You can help me to imporve it.
@@ -37,7 +37,7 @@ Or You can help me to imporve it.
 
 ## Installation
 
-Contact App Download Link [Contac App](https://drive.google.com/file/d/1xHgGbcgvv8BhRzbZQI_sZ2G3m4dfnekL/view?usp=sharing) v1.1.0 Ready to install.
+Contact App Download Link [Download Me](https://drive.google.com/file/d/1xHgGbcgvv8BhRzbZQI_sZ2G3m4dfnekL/view?usp=sharing) v1.1.0 Ready to install.
 
 Try this And if you feel it need some any imporvement then please inform me. 
 
