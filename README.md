@@ -37,7 +37,7 @@ Or You can help me to imporve it.
 
 ## Installation
 
-Contact App Download Link [Download Me](https://drive.google.com/file/d/1xHgGbcgvv8BhRzbZQI_sZ2G3m4dfnekL/view?usp=sharing "Click here to Download App") v1.1.0 Ready to install.
+Contact App Download Link [Download Me](https://drive.google.com/file/d/1fK2WMOHUeowUPB7kEZ9sq9JVfd-Q5owo/view?usp=sharing") v1.2.0 Ready to install.
 
 Try this And if you feel it need some any imporvement then please inform me. 
 
