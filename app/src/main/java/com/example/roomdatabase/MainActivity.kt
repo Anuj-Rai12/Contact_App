@@ -2,32 +2,20 @@ package com.example.roomdatabase
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.ActionBar
-import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import coil.ImageLoader
-import coil.request.ImageRequest
-import coil.request.SuccessResult
 import com.example.roomdatabase.databinding.ActivityMainBinding
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.security.AccessController.getContext
 import kotlin.math.floor
 
 
@@ -54,15 +42,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //getSupportActionBar()?.hide()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        lifecycleScope.launch {
+        /*lifecycleScope.launch {
             val deferred = async { getBitmap() }
             getmybitmap = deferred.await()
-        }
+
+        }*/
+        getmybitmap =convertImage(R.drawable.profilepicture)
         requestPermission()
         navController = findNavController(R.id.fragment)
         appBarConfiguration =
@@ -70,6 +61,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.mybtnNag.setupWithNavController(navController)
     }
+
+    private fun convertImage(it: Int): Bitmap = BitmapFactory.decodeResource(resources, it)
 
     private fun checkCallPermission() = (ActivityCompat.checkSelfPermission(
         this,
@@ -100,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, collectAllPermission.toTypedArray(), 101)
     }
 
-    private suspend fun getBitmap(): Bitmap? {
+    /*private suspend fun getBitmap(): Bitmap? {
         val loading = ImageLoader(this)
         val request = ImageRequest.Builder(this)
             .data("https://avatars.githubusercontent.com/u/63039156?s=400&u=7c38d67ee6b4ec2d5fbaffd9760544c0d981b16f&v=4")
@@ -110,10 +103,10 @@ class MainActivity : AppCompatActivity() {
             val result = (loading.execute(request) as SuccessResult).drawable
             (result as BitmapDrawable).bitmap
         } catch (e: Exception) {
-                Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Check Your Internet Connection", Toast.LENGTH_SHORT).show()
             getmybitmap
         }
-    }
+    }*/
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

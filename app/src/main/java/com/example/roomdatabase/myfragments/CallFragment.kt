@@ -56,6 +56,7 @@ class CallFragment : Fragment() {
             mydialer.setOnClickListener {
                 (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
                 mydialer.isVisible = false
+                binding.callbg.isVisible=false
                 greenboom.isVisible = true
                 greenboom.startAnimation(animation) {
                     callDialer()
