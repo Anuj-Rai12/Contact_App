@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoomDataBase">
         <activity android:name=".MainActivity" />
-        <activity android:name=".userenterface">
+        <activity android:name=".userenterface"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

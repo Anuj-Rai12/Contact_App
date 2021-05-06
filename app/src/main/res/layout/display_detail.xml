@@ -54,13 +54,15 @@
                         android:id="@+id/myrecyphone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_alignTop="@id/myrecyprofile"
+                        android:layout_alignBottom="@id/myrecyprofile"
                         android:layout_marginLeft="2dp"
                         android:layout_toLeftOf="@id/recyArrow"
                         android:layout_toRightOf="@id/myrecyprofile"
+                        android:ellipsize="end"
                         android:gravity="center"
-                        android:maxWidth="100dp"
-                        android:text="dkgdklgjdgjkdgjldgsjklgjskldgkjldgjlsdjglskd"
+                        android:maxLines="1"
+                        android:text="dkgdklgjdgjkdgjldgsjklgjskldgkjldgjjkkkkjklsdjglskd"
                         android:textAlignment="center"
                         android:textSize="25sp"
                         android:textStyle="bold" />
@@ -71,7 +73,6 @@
                         android:layout_height="20dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
                         android:src="@drawable/layoutback" />
                 </RelativeLayout>
             </LinearLayout>
