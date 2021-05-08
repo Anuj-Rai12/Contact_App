@@ -187,4 +187,3 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
         })
     }
 }
-

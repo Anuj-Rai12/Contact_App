@@ -166,10 +166,12 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateData() {
         if (updateOrDelete) {
-            if (inputFirstName.value.isNullOrEmpty() || inputLastName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
+            if (inputFirstName.value.isNullOrEmpty() || phoneNo.value.isNullOrEmpty() || !phoneNo.value!!.isDigitsOnly() || bitmap == null) {
                 _snackbarmsg.value = Event("Profile is Not Updated")
                 return
             }
+            if (inputLastName.value.isNullOrEmpty())
+                inputLastName.value = "  "
             update(
                 MyContact(
                     myContact.id,
