@@ -18,15 +18,17 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     //Activity/Fragment Checker
     var actionOp: String? = null
     var checdes: Boolean? = null
+
     //Repository linking boz of to avoiding many instances
     private val repo: MyContactRepo
-    val allTheData: LiveData<List<MyContact>>
+
+    //val allTheData: LiveData<List<MyContact>>
     val allTheCall: LiveData<List<MyContact>>
 
     init {
         val dao = MyContactBolier.getInstance(application).dataAccessObj
         repo = MyContactRepo(dao)
-        allTheData = repo.dao
+        // allTheData = repo.dao.asLiveData()
         allTheCall = repo.callHistory
     }
 
@@ -34,6 +36,8 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
     private var updateOrDelete: Boolean = false
     private lateinit var myContact: MyContact
     private var updateCalls: Boolean = false
+    private fun getData() = repo.dao.asLiveData()
+    val allTheData = getData()
 
     //Messages
     private var _snackbarmsg = MutableLiveData<Event<String>>()
@@ -105,6 +109,10 @@ class MyViewModel(application: Application) : AndroidViewModel(application) {
         updateOrDelete = true
         updateCalls = true
         this.myContact = myContact
+    }
+
+    fun insertCan(myContact: MyContact) {
+        insert(myContact)
     }
 
     fun fav(view: View) = if (myContact.favor == "0") {

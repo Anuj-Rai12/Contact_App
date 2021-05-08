@@ -6,6 +6,7 @@ import com.example.roomdatabase.mycontactdb.MyContactDao
 
 class MyContactRepo(val myContactDao: MyContactDao) {
     val dao = myContactDao.displayAllData()
+
     val callHistory=myContactDao.getCallHistory()
     suspend fun insertContact(myContact: MyContact) {
         myContactDao.insertContact(myContact)

@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             getmybitmap = deferred.await()
 
         }*/
-        getmybitmap =convertImage(R.drawable.profilepicture)
+        getmybitmap = convertImage(R.drawable.profilepicture)
         requestPermission()
         navController = findNavController(R.id.fragment)
         appBarConfiguration =
@@ -81,6 +81,12 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED)
 
+    private fun checkContactPermission() =
+        (ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_CONTACTS
+        ) == PackageManager.PERMISSION_GRANTED)
+
     private fun requestPermission() {
         val collectAllPermission = mutableListOf<String>()
         if (!checkCameraPermission())
@@ -89,6 +95,8 @@ class MainActivity : AppCompatActivity() {
             collectAllPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         if (!checkCallPermission())
             collectAllPermission.add(Manifest.permission.CALL_PHONE)
+        if (!checkContactPermission())
+            collectAllPermission.add(Manifest.permission.READ_CONTACTS)
         if (collectAllPermission.isNotEmpty())
             ActivityCompat.requestPermissions(this, collectAllPermission.toTypedArray(), 101)
     }

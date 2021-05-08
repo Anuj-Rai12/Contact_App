@@ -1,19 +1,25 @@
 package com.example.roomdatabase.myfragments
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.database.Cursor
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.roomdatabase.MainActivity
 import com.example.roomdatabase.R
 import com.example.roomdatabase.databinding.FragmentContactBinding
 import com.example.roomdatabase.mycontactdb.MyContact
@@ -58,8 +64,9 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
             if (it.isEmpty()) {
                 binding.myimage.visibility = View.VISIBLE
                 binding.myimage.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_contacts_24))
+                getContacts()
             } else {
-                binding.myimage.visibility=View.GONE
+                binding.myimage.visibility = View.GONE
             }
             myContactRecycle.notifyDataSetChanged()
         })
@@ -80,6 +87,68 @@ class ContactFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun itemSelected(myContact: MyContact) {
         myViewModel.updateOrDelete(myContact)
         gotoDisplayContact()
+    }
+
+    private fun checkContactPermission() =
+        (ActivityCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.READ_CONTACTS
+        ) == PackageManager.PERMISSION_GRANTED)
+
+    private fun getContacts() {
+        if (checkContactPermission()) {
+
+            val uri = ContactsContract.Contacts.CONTENT_URI
+            val stringSort = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
+            val cursor: Cursor? = activity?.contentResolver?.query(
+                uri, null, null, null, stringSort
+            )
+            Log.i("MyName", " the value of Cursor is $cursor")
+            cursor?.let { cursor ->
+                while (cursor.moveToNext()) {
+                    val id = cursor.getString(
+                        cursor.getColumnIndex(
+                            ContactsContract.Contacts._ID
+                        )
+                    )
+                    //getName
+                    val name = cursor.getString(
+                        cursor.getColumnIndex(
+                            ContactsContract.Contacts.DISPLAY_NAME
+                        )
+                    )
+                    Log.i("MyName", "$name")
+                    val phoneUrl = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+                    val selector = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?"
+                    val phoneCursor: Cursor? = activity?.contentResolver?.query(
+                        phoneUrl, null, selector, arrayOf<String>(id), null
+                    )
+                    Log.i("MyName", " the value of PhoneCursor is $phoneCursor")
+                    if (phoneCursor != null) {
+                        if (phoneCursor.moveToNext()) {
+                            val phoneNo = phoneCursor.getString(
+                                phoneCursor.getColumnIndex(
+                                    ContactsContract.CommonDataKinds.Phone.NUMBER
+                                )
+                            )
+                            Log.i("MyName", "$phoneNo")
+                            var myco = MyContact(
+                                0,
+                                "0",
+                                name,
+                                " ",
+                                phoneNo,
+                                0,
+                                MainActivity.getmybitmap!!
+                            )
+                            myViewModel.insertCan(myco)
+                            phoneCursor.close()
+                        }
+                    }
+                }
+                cursor.close()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
